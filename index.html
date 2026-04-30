@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6–12 Disciplinary Literacy Dashboard</title>
+  <style>
+    :root {
+      --teal: #006f73;
+      --dark: #073b4c;
+      --blue: #247ba0;
+      --green: #70a800;
+      --gold: #f4b942;
+      --light: #f4f8f8;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #596772;
+      --border: #d8e5e5;
+      --shadow: 0 10px 24px rgba(7, 59, 76, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eaf4f4 0%, #f8fbfb 45%, #ffffff 100%);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--dark), var(--teal));
+      color: white;
+      padding: 34px 24px 28px;
+    }
+
+    .wrap { max-width: 1240px; margin: 0 auto; }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      opacity: 0.88;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 8px 0 10px;
+      font-size: clamp(2rem, 4vw, 4rem);
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      max-width: 900px;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 18px;
+      padding: 16px;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-card strong { display: block; font-size: 1.2rem; }
+    .hero-card span { font-size: 0.92rem; opacity: 0.92; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(7,59,76,0.06);
+    }
+
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 10px 20px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .tabs a {
+      white-space: nowrap;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .tabs a:hover { background: var(--light); border-color: var(--border); }
+
+    main { padding: 28px 20px 60px; }
+
+    section {
+      max-width: 1240px;
+      margin: 0 auto 32px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--dark);
+      font-size: clamp(1.45rem, 2.5vw, 2.3rem);
+    }
+
+    .note {
+      color: var(--muted);
+      max-width: 780px;
+      margin: 6px 0 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--teal);
+      font-size: 1.18rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      background: #e8f5f5;
+      color: var(--teal);
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 2px 3px 8px 0;
+    }
+
+    .callout {
+      background: #fff8e6;
+      border: 1px solid #ffe3a1;
+      border-left: 6px solid var(--gold);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0 18px;
+    }
+
+    button, select, input {
+      font: inherit;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: white;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    button.active, button:hover {
+      background: var(--teal);
+      color: white;
+      border-color: var(--teal);
+    }
+
+    input { flex: 1; min-width: 220px; }
+
+    .practice-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .practice {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .practice h3 { margin: 0 0 8px; color: var(--dark); }
+    .practice p { margin: 6px 0; }
+    .practice ul { margin: 8px 0 0; padding-left: 18px; }
+
+    .role-band {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .role {
+      border-top: 8px solid var(--teal);
+    }
+    .role:nth-child(2) { border-top-color: var(--blue); }
+    .role:nth-child(3) { border-top-color: var(--green); }
+
+    details {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .matrix th, .matrix td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .matrix th {
+      background: var(--dark);
+      color: white;
+    }
+
+    .quick-links a {
+      display: block;
+      color: var(--teal);
+      font-weight: 700;
+      margin: 8px 0;
+      text-decoration: none;
+    }
+
+    .quick-links a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .grid-3, .grid-2, .role-band, .practice-list { grid-template-columns: 1fr; }
+      .section-title { display: block; }
+      .matrix { font-size: 0.9rem; }
+    }
+
+    @media print {
+      nav, .toolbar, footer { display: none; }
+      body { background: white; }
+      .card, .practice, .matrix { box-shadow: none; break-inside: avoid; }
+      section { page-break-margin: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Teacher • Building • District Reference</div>
+      <h1>6–12 Disciplinary Literacy Dashboard</h1>
+      <p class="subtitle">A practical guide for embedding reading, writing, speaking, listening, viewing, inquiry, and evidence-based reasoning into every discipline — not as an add-on, but as the way students learn content.</p>
+      <div class="hero-grid">
+        <div class="hero-card"><strong>Classroom</strong><span>Plan units, teach strategies, and scaffold disciplinary thinking.</span></div>
+        <div class="hero-card"><strong>Building</strong><span>Align teams, resources, data, supports, and professional learning.</span></div>
+        <div class="hero-card"><strong>District</strong><span>Scale coherence, leadership, curriculum, and continuous improvement.</span></div>
+        <div class="hero-card"><strong>All Content Areas</strong><span>ELA, mathematics, science, social studies, CTE, arts, world languages, PE, and electives.</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="tabs">
+      <a href="#start">Start Here</a>
+      <a href="#practices">10 Classroom Practices</a>
+      <a href="#roles">Role Dashboards</a>
+      <a href="#schoolwide">8 School-Wide Practices</a>
+      <a href="#planning">Planning Tools</a>
+      <a href="#lookfors">Look-Fors</a>
+      <a href="#resources">Resources</a>
+      <a href="#interactive">Interactive Tools</a>
+      <a href="#fillable-planner">Fillable Planner</a>
+      <a href="#rollout-supports">Rollout Supports</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="start">
+      <div class="section-title">
+        <div>
+          <h2>Start Here: What Is Disciplinary Literacy?</h2>
+          <p class="note">Disciplinary literacy means students learn how people in a field read, write, communicate, investigate, evaluate evidence, and produce knowledge. It looks different in biology, mathematics, history, engineering, art, health, and other subjects.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Core Idea</h3>
+          <p>Students do not just “read more.” They learn how experts in each discipline make meaning: scientists interpret data and models, historians corroborate sources, mathematicians justify reasoning, and artists critique choices.</p>
+        </div>
+        <div class="card">
+          <h3>Key Themes</h3>
+          <span class="pill">Problem or question driven</span>
+          <span class="pill">Authentic texts</span>
+          <span class="pill">Unit-level integration</span>
+          <span class="pill">Community connection</span>
+          <span class="pill">Language awareness</span>
+          <p>Use literacy practices because they help students learn the discipline, not because literacy is a separate activity.</p>
+        </div>
+        <div class="card">
+          <h3>Quick Classroom Test</h3>
+          <p>Ask: “What would a literate person in this field do with information?” Then plan student tasks that mirror that work.</p>
+          <ul>
+            <li>What texts/data will students use?</li>
+            <li>What evidence will they evaluate?</li>
+            <li>What claim, model, solution, or product will they communicate?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="practices">
+      <div class="section-title">
+        <div>
+          <h2>10 Essential Classroom Practices</h2>
+          <p class="note">Filter by role or search for a strategy. These practices are adapted for practical classroom reference across content areas.</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="teacher">Teacher</button>
+        <button class="filter" data-filter="coach">Coach/Admin</button>
+        <button class="filter" data-filter="student">Student Experience</button>
+        <input id="search" type="search" placeholder="Search strategies, e.g., evidence, vocabulary, discussion, writing..." />
+      </div>
+
+      <div class="practice-list" id="practiceList">
+        <article class="practice" data-tags="teacher coach student inquiry problem question authentic">
+          <h3>1. Problem- or Inquiry-Based Instruction</h3>
+          <p><strong>Use when:</strong> launching a unit, anchoring a phenomenon, framing a historical question, presenting a design challenge, or posing a mathematical problem.</p>
+          <ul><li>Start with an authentic problem or question.</li><li>Give students a real reason to read, write, investigate, and communicate.</li><li>Return to the problem throughout the unit.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher student collaboration discussion speaking listening discourse">
+          <h3>2. Collaborative Reasoning and Discussion</h3>
+          <p><strong>Use when:</strong> students need to compare interpretations, critique evidence, explain reasoning, or build shared understanding.</p>
+          <ul><li>Use accountable talk stems and discipline-specific norms.</li><li>Require evidence, not just opinions.</li><li>Teach students how to agree, challenge, clarify, and extend.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher student reading texts comprehension annotation source data graph model">
+          <h3>3. Discipline-Specific Reading and Viewing</h3>
+          <p><strong>Use when:</strong> students work with textbooks, primary sources, diagrams, maps, graphs, lab data, technical manuals, videos, simulations, or media.</p>
+          <ul><li>Model how experts approach the text or data.</li><li>Teach text features, structures, symbols, and representations.</li><li>Use annotation and sense-making routines.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher student writing claim evidence reasoning explanation argument lab report proof">
+          <h3>4. Discipline-Specific Writing</h3>
+          <p><strong>Use when:</strong> students explain a process, justify a solution, construct an argument, write a lab report, develop a proof, or produce a product.</p>
+          <ul><li>Study models of writing from the discipline.</li><li>Teach claim-evidence-reasoning or other field-specific structures.</li><li>Use short, frequent writing before long formal writing.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher student vocabulary language academic disciplinary morphology word consciousness">
+          <h3>5. Academic and Discipline-Specific Language</h3>
+          <p><strong>Use when:</strong> students need to interpret technical vocabulary, symbols, word parts, sentence structures, or language that has different meanings across disciplines.</p>
+          <ul><li>Teach vocabulary in context, not as isolated lists.</li><li>Compare everyday meanings with disciplinary meanings.</li><li>Support students in using precise language in talk and writing.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher coach student culturally responsive sustaining identity relevance funds knowledge">
+          <h3>6. Culturally Sustaining and Responsive Literacy</h3>
+          <p><strong>Use when:</strong> selecting texts, designing problems, building relevance, or helping students see themselves as capable members of the discipline.</p>
+          <ul><li>Use diverse texts, examples, voices, and applications.</li><li>Connect content to students’ communities and lived experiences.</li><li>Invite student voice, choice, and identity development.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher student evidence source credibility data argument media information literacy">
+          <h3>7. Evidence Evaluation and Source Use</h3>
+          <p><strong>Use when:</strong> students research, analyze sources, interpret data, evaluate claims, or make decisions based on information.</p>
+          <ul><li>Teach what counts as evidence in the discipline.</li><li>Compare source credibility, bias, limitations, and context.</li><li>Have students justify why evidence supports a claim.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher student metacognition strategy reflection goal self regulation">
+          <h3>8. Strategy Instruction and Metacognition</h3>
+          <p><strong>Use when:</strong> students need support planning, monitoring, revising, and reflecting on reading, writing, problem solving, or discussion.</p>
+          <ul><li>Think aloud as an expert reader/writer/problem solver.</li><li>Teach students when, why, and how to use strategies.</li><li>Build reflection into routines, not just end-of-unit tasks.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher coach student digital multimodal technology media tools">
+          <h3>9. Digital, Multimodal, and Media Literacy</h3>
+          <p><strong>Use when:</strong> students use simulations, databases, videos, infographics, maps, models, podcasts, or digital publishing tools.</p>
+          <ul><li>Teach students to analyze how meaning is made across modes.</li><li>Use digital tools to deepen content knowledge, not decorate work.</li><li>Discuss credibility, audience, and purpose.</li></ul>
+        </article>
+
+        <article class="practice" data-tags="teacher coach student assessment feedback formative data differentiation support">
+          <h3>10. Assessment, Feedback, and Transfer</h3>
+          <p><strong>Use when:</strong> checking understanding, planning intervention, supporting revision, or helping students apply strategies independently.</p>
+          <ul><li>Use formative checks tied to the literacy demands of the task.</li><li>Give specific feedback on reasoning, evidence, language, and process.</li><li>Ask students to transfer strategies to new problems and texts.</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="roles">
+      <div class="section-title">
+        <div>
+          <h2>Role Dashboards</h2>
+          <p class="note">Use these cards for quick planning by teacher teams, instructional coaches, building administrators, and district leaders.</p>
+        </div>
+      </div>
+      <div class="role-band">
+        <div class="card role">
+          <h3>Classroom Teacher</h3>
+          <p><strong>Primary question:</strong> How will students read, write, speak, listen, view, and think like members of this discipline?</p>
+          <ul>
+            <li>Identify the unit problem/question.</li>
+            <li>Name the discipline-specific texts and representations.</li>
+            <li>Model expert thinking with think-alouds.</li>
+            <li>Plan discussion, writing, vocabulary, and evidence routines.</li>
+            <li>Use formative assessment to adjust supports.</li>
+          </ul>
+        </div>
+        <div class="card role">
+          <h3>Building Administrator</h3>
+          <p><strong>Primary question:</strong> What conditions help every department implement disciplinary literacy consistently?</p>
+          <ul>
+            <li>Build a representative literacy leadership team.</li>
+            <li>Protect collaboration time for departments and cross-content teams.</li>
+            <li>Use multiple data sources, including student voice.</li>
+            <li>Observe for student sense-making, not just teacher coverage.</li>
+            <li>Align resources, intervention, and professional learning.</li>
+          </ul>
+        </div>
+        <div class="card role">
+          <h3>District Leader</h3>
+          <p><strong>Primary question:</strong> How will curriculum, professional learning, resources, and evaluation systems support coherent practice?</p>
+          <ul>
+            <li>Adopt a common definition and vision.</li>
+            <li>Align curriculum maps and unit design expectations.</li>
+            <li>Support job-embedded professional learning.</li>
+            <li>Invest in diverse texts, media, databases, and technology.</li>
+            <li>Monitor equity, access, and implementation over time.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="schoolwide">
+      <div class="section-title">
+        <div>
+          <h2>8 Essential School-Wide Practices</h2>
+          <p class="note">These practices move disciplinary literacy from isolated classroom strategy use to a coherent building-wide system.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <details open><summary>1. Literacy Leadership Team</summary><p>Create a team with administrators, teacher leaders, department chairs, library/media specialists, coaches, and support staff. Use data and continuous improvement to guide implementation.</p></details>
+        <details open><summary>2. Collective Responsibility and Safe Climate</summary><p>Develop a shared belief that all students can grow as disciplinary readers, writers, thinkers, and communicators. Build belonging, agency, and culturally responsive environments.</p></details>
+        <details><summary>3. Visible Commitment to Disciplinary Literacy</summary><p>Make reading, writing, speaking, listening, and viewing visible across classrooms, libraries, media centers, and shared school spaces.</p></details>
+        <details><summary>4. Ongoing Professional Learning</summary><p>Use job-embedded, collaborative, discipline-specific professional learning that includes modeling, observation, feedback, and reflection.</p></details>
+        <details><summary>5. Equitable Academic Support</summary><p>Provide supports in addition to strong core instruction. Differentiate supports based on student strengths and needs, and monitor progress.</p></details>
+        <details><summary>6. Response to Student Needs</summary><p>Coordinate academic, social-emotional, physical, and behavioral supports that may affect disciplinary literacy development.</p></details>
+        <details><summary>7. High-Quality Resources</summary><p>Ensure access to diverse texts, media, digital tools, curricular resources, libraries, and technology that support literacy in all disciplines.</p></details>
+        <details><summary>8. Community Networking</summary><p>Partner with families, local organizations, businesses, libraries, and community groups so students use disciplinary literacy beyond school assignments.</p></details>
+      </div>
+    </section>
+
+    <section id="subject-specific">
+      <div class="section-title">
+        <div>
+          <h2>Subject-Specific Disciplinary Literacy Strategies</h2>
+          <p class="note">These examples highlight how disciplinary literacy looks different across content areas. Use them to support department conversations and classroom planning.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Science</h3>
+          <ul>
+            <li>Interpret graphs, models, and data tables as primary texts.</li>
+            <li>Use Claim-Evidence-Reasoning (CER) for explanations.</li>
+            <li>Engage in modeling and revising scientific explanations.</li>
+            <li>Analyze experimental design and sources of error.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Mathematics</h3>
+          <ul>
+            <li>Justify solutions using multiple representations.</li>
+            <li>Read and analyze worked examples and proofs.</li>
+            <li>Engage in mathematical discourse comparing strategies.</li>
+            <li>Write explanations of reasoning, not just answers.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Social Studies</h3>
+          <ul>
+            <li>Source, contextualize, and corroborate documents.</li>
+            <li>Analyze bias, perspective, and reliability.</li>
+            <li>Construct arguments using historical evidence.</li>
+            <li>Engage in civic reasoning and discussion.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>ELA</h3>
+          <ul>
+            <li>Analyze author’s craft, structure, and purpose.</li>
+            <li>Support claims with textual evidence.</li>
+            <li>Write for multiple audiences and purposes.</li>
+            <li>Engage in discussion grounded in interpretation.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>CTE</h3>
+          <ul>
+            <li>Read technical texts (manuals, schematics, procedures).</li>
+            <li>Write for workplace purposes (reports, recommendations).</li>
+            <li>Use discipline-specific vocabulary and tools.</li>
+            <li>Apply literacy to real-world problem solving.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Arts & Electives</h3>
+          <ul>
+            <li>Critique using discipline-specific language.</li>
+            <li>Interpret visual, musical, or performance texts.</li>
+            <li>Write artist statements and reflections.</li>
+            <li>Analyze technique, style, and audience impact.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="planning">
+      <div class="section-title">
+        <div>
+          <h2>Planning Tools</h2>
+          <p class="note">Use these prompts during PLCs, unit planning, walkthrough calibration, coaching cycles, or district curriculum review.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Unit Planning Protocol</h3>
+          <ol>
+            <li><strong>Anchor:</strong> What authentic problem, phenomenon, question, issue, or challenge drives the unit?</li>
+            <li><strong>Texts:</strong> What texts, data, media, models, visuals, or tools do experts use?</li>
+            <li><strong>Discourse:</strong> How will students talk, listen, debate, explain, question, and critique?</li>
+            <li><strong>Writing/Product:</strong> What will students produce, and for what purpose/audience?</li>
+            <li><strong>Language:</strong> What vocabulary, symbols, sentence structures, or conventions need explicit support?</li>
+            <li><strong>Assessment:</strong> What evidence will show growth in both content and disciplinary literacy?</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>PLC Conversation Stems</h3>
+          <ul>
+            <li>What disciplinary thinking are we asking students to do?</li>
+            <li>Where are students reading or viewing something authentic to the discipline?</li>
+            <li>What literacy demand might create a barrier to content learning?</li>
+            <li>How will we model expert thinking before expecting independence?</li>
+            <li>How will student voice, culture, and community knowledge enter the unit?</li>
+            <li>What common evidence will we bring back to the next PLC?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:16px;">
+        <strong>Implementation reminder:</strong> Disciplinary literacy should be embedded into the unit and daily content work. It is strongest when students use literacy practices to investigate meaningful questions, build knowledge, and communicate to authentic audiences.
+      </div>
+    </section>
+
+    <section id="lookfors">
+      <div class="section-title">
+        <div>
+          <h2>Walkthrough and Coaching Look-Fors</h2>
+          <p class="note">Use this matrix as a non-evaluative calibration tool for coaching, self-reflection, and leadership team learning walks.</p>
+        </div>
+      </div>
+      <table class="matrix">
+        <thead>
+          <tr><th>Area</th><th>Beginning</th><th>Developing</th><th>Strong Evidence</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Purpose</strong></td><td>Students complete literacy tasks because they are assigned.</td><td>Students know the task purpose but connection to the discipline is partial.</td><td>Students read, write, discuss, or view to solve a disciplinary problem or communicate to an audience.</td></tr>
+          <tr><td><strong>Text/Data Use</strong></td><td>Text is mainly teacher-selected and teacher-explained.</td><td>Students interact with text/data using teacher-provided supports.</td><td>Students analyze, question, compare, annotate, and evaluate discipline-specific texts, data, models, or media.</td></tr>
+          <tr><td><strong>Discussion</strong></td><td>Talk is mostly recitation or answer sharing.</td><td>Students explain ideas and respond to peers with prompts.</td><td>Students build, challenge, refine, and justify ideas using evidence and disciplinary norms.</td></tr>
+          <tr><td><strong>Writing</strong></td><td>Writing is copied, brief, or disconnected from disciplinary thinking.</td><td>Students use writing frames or models to explain thinking.</td><td>Students write for authentic purposes using evidence, reasoning, vocabulary, and conventions of the field.</td></tr>
+          <tr><td><strong>Equity and Belonging</strong></td><td>Participation is uneven or dependent on prior background knowledge.</td><td>Scaffolds support access for many students.</td><td>Tasks leverage students’ identities, languages, cultures, strengths, and communities as assets.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="interactive">
+      <div class="section-title">
+        <div>
+          <h2>Interactive Rollout Tools</h2>
+          <p class="note">Use these quick tools during planning, PLC meetings, coaching conversations, administrator walkthroughs, or district rollout sessions.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Classroom Strategy Idea Generator</h3>
+          <p>Select a content area and instructional goal to generate a practical disciplinary literacy idea.</p>
+          <div class="toolbar">
+            <select id="contentArea">
+              <option value="science">Science</option>
+              <option value="math">Mathematics</option>
+              <option value="social">Social Studies</option>
+              <option value="ela">ELA</option>
+              <option value="cte">CTE / Career Tech</option>
+              <option value="arts">Arts / Electives</option>
+            </select>
+            <select id="goalArea">
+              <option value="reading">Reading / Viewing</option>
+              <option value="writing">Writing</option>
+              <option value="discussion">Discussion</option>
+              <option value="vocabulary">Vocabulary / Language</option>
+              <option value="evidence">Evidence and Reasoning</option>
+            </select>
+            <button onclick="generateIdea()">Generate Idea</button>
+          </div>
+          <div id="ideaOutput" class="callout">Choose a content area and goal, then generate an idea.</div>
+        </div>
+
+        <div class="card">
+          <h3>Administrator Coaching Prompt Generator</h3>
+          <p>Use these prompts for walkthrough feedback, PLC visits, department meetings, or coaching conversations.</p>
+          <div class="toolbar">
+            <select id="adminFocus">
+              <option value="purpose">Purpose and Alignment</option>
+              <option value="student">Student Thinking</option>
+              <option value="equity">Equity and Access</option>
+              <option value="collaboration">Collaboration</option>
+              <option value="assessment">Assessment and Feedback</option>
+            </select>
+            <button onclick="generateAdminPrompt()">Generate Prompt</button>
+          </div>
+          <div id="adminOutput" class="callout">Select a focus area to generate a coaching prompt.</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <h3>Rollout Readiness Checklist</h3>
+          <p>Check items to estimate whether your classroom, building, or district is ready for broader implementation.</p>
+          <label><input type="checkbox" class="readyCheck"> Shared definition of disciplinary literacy</label><br>
+          <label><input type="checkbox" class="readyCheck"> Leadership team or PLC structure in place</label><br>
+          <label><input type="checkbox" class="readyCheck"> Time for collaborative planning</label><br>
+          <label><input type="checkbox" class="readyCheck"> Common walkthrough/look-for language</label><br>
+          <label><input type="checkbox" class="readyCheck"> Department-specific examples available</label><br>
+          <label><input type="checkbox" class="readyCheck"> Professional learning plan identified</label><br>
+          <label><input type="checkbox" class="readyCheck"> Student data and student voice included</label><br>
+          <label><input type="checkbox" class="readyCheck"> Resources/texts/media reviewed for access and equity</label><br>
+          <button style="margin-top:12px;" onclick="scoreReadiness()">Score Readiness</button>
+          <div id="readinessOutput" class="callout" style="margin-top:12px;">Check items, then score your readiness.</div>
+        </div>
+
+        <div class="card">
+          <h3>30-60-90 Day Rollout Planner</h3>
+          <p>Select your level of implementation to generate a suggested launch sequence.</p>
+          <div class="toolbar">
+            <select id="rolloutLevel">
+              <option value="classroom">Classroom</option>
+              <option value="building">Building</option>
+              <option value="district">District</option>
+            </select>
+            <button onclick="generateRollout()">Create Plan</button>
+          </div>
+          <div id="rolloutOutput" class="callout">Select a level and create a plan.</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <h3>PLC Meeting Builder</h3>
+          <p>Create a simple PLC agenda focused on implementing disciplinary literacy.</p>
+          <div class="toolbar">
+            <select id="plcFocus">
+              <option value="unit">Unit Planning</option>
+              <option value="studentwork">Student Work Analysis</option>
+              <option value="walkthrough">Look-For Calibration</option>
+              <option value="intervention">Student Support</option>
+            </select>
+            <button onclick="buildPLC()">Build Agenda</button>
+          </div>
+          <div id="plcOutput" class="callout">Choose a PLC focus and build an agenda.</div>
+        </div>
+
+        <div class="card">
+          <h3>Teacher Reflection Note</h3>
+          <p>Use this as a quick self-reflection after a lesson or unit.</p>
+          <textarea id="reflectionBox" rows="8" style="width:100%; border:1px solid var(--border); border-radius:12px; padding:12px;" placeholder="What literacy strategy did students use? What evidence showed content learning? What support is needed next?"></textarea>
+          <button style="margin-top:12px;" onclick="copyReflection()">Copy Reflection</button>
+          <div id="copyOutput" class="note"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fillable-planner">
+      <div class="section-title">
+        <div>
+          <h2>Fillable Digital Planning Template</h2>
+          <p class="note">Complete this directly in the dashboard. Choose a subject area to load subject-specific disciplinary literacy prompts, then save your work in this browser or copy it for a lesson plan, PLC agenda, or administrator review.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <select id="plannerSubject" onchange="loadPlannerPrompts()">
+            <option value="science">Science</option>
+            <option value="math">Mathematics</option>
+            <option value="social">Social Studies</option>
+            <option value="ela">ELA</option>
+            <option value="cte">CTE</option>
+            <option value="arts">Arts & Electives</option>
+          </select>
+          <input id="plannerTitle" type="text" placeholder="Unit / Lesson Title" />
+          <input id="plannerTeacher" type="text" placeholder="Teacher / Team" />
+          <button onclick="savePlanner()">Save</button>
+          <button onclick="loadSavedPlanner()">Load Saved</button>
+          <button onclick="copyPlanner()">Copy Plan</button>
+          <button onclick="clearPlanner()">Clear</button>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label><strong>Grade / Course</strong></label>
+            <input id="plannerCourse" type="text" style="width:100%; margin:6px 0 12px;" placeholder="Example: Biology, Algebra 1, US History" />
+          </div>
+          <div>
+            <label><strong>Time Frame</strong></label>
+            <input id="plannerTime" type="text" style="width:100%; margin:6px 0 12px;" placeholder="Example: 3 class periods, 2-week unit" />
+          </div>
+        </div>
+
+        <div id="plannerPromptFields" class="grid-2" style="margin-top:10px;"></div>
+
+        <div style="margin-top:16px;">
+          <label><strong>Administrator / Coach Feedback or Next Steps</strong></label>
+          <textarea id="plannerFeedback" rows="5" style="width:100%; border:1px solid var(--border); border-radius:12px; padding:12px; margin-top:6px;" placeholder="What is strong? What would deepen disciplinary literacy? What support or follow-up is needed?"></textarea>
+        </div>
+
+        <div id="plannerStatus" class="callout" style="margin-top:16px;">Select a subject area to begin. Your saved plan stays in this browser.</div>
+      </div>
+    </section>
+
+    <section id="rollout-supports">
+      <div class="section-title">
+        <div>
+          <h2>Additional Rollout Supports</h2>
+          <p class="note">These tools help teachers, administrators, coaches, and district teams move from awareness to consistent implementation.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Implementation Stages</h3>
+          <table class="matrix">
+            <thead>
+              <tr><th>Stage</th><th>What It Looks Like</th><th>Next Best Move</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Awareness</strong></td><td>Staff know the term but may see it as “another initiative.”</td><td>Use examples from each subject area and connect to current curriculum.</td></tr>
+              <tr><td><strong>Exploration</strong></td><td>Teachers try one or two strategies in isolated lessons.</td><td>Use PLCs to plan, test, and examine student work.</td></tr>
+              <tr><td><strong>Initial Implementation</strong></td><td>Departments begin embedding strategies into units.</td><td>Use common look-fors and coaching conversations.</td></tr>
+              <tr><td><strong>Integration</strong></td><td>Students regularly read, write, discuss, and reason like members of the discipline.</td><td>Build shared rubrics, exemplars, and student reflection routines.</td></tr>
+              <tr><td><strong>Sustainability</strong></td><td>Practices are part of curriculum review, onboarding, coaching, and leadership routines.</td><td>Monitor equity, student outcomes, and long-term professional learning needs.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Common Language Glossary</h3>
+          <details open><summary>Disciplinary Literacy</summary><p>Reading, writing, thinking, speaking, listening, and viewing in ways that are specific to a discipline or field.</p></details>
+          <details><summary>Authentic Text</summary><p>Any text, data set, model, visual, media source, tool, or representation used by people in the field.</p></details>
+          <details><summary>Evidence-Based Reasoning</summary><p>Using evidence from texts, data, observations, models, or sources to support a claim, explanation, solution, or interpretation.</p></details>
+          <details><summary>Scaffold</summary><p>A temporary support that helps students access complex disciplinary thinking until they can perform more independently.</p></details>
+          <details><summary>Transfer</summary><p>Students applying a literacy strategy in a new text, problem, task, or content situation without being directly told what to do.</p></details>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <h3>Walkthrough Evidence Capture</h3>
+          <p>Use this for non-evaluative classroom visits focused on student learning evidence.</p>
+          <textarea id="walkthroughNotes" rows="10" style="width:100%; border:1px solid var(--border); border-radius:12px; padding:12px;" placeholder="Observed student task:
+Evidence of disciplinary reading/viewing:
+Evidence of discussion:
+Evidence of writing/reasoning:
+Access and equity supports:
+Possible next step:"></textarea>
+          <button style="margin-top:12px;" onclick="copyWalkthrough()">Copy Walkthrough Notes</button>
+          <div id="walkthroughStatus" class="note"></div>
+        </div>
+
+        <div class="card">
+          <h3>Professional Learning Menu</h3>
+          <p>Choose one option for a staff meeting, PLC, coaching cycle, or district PD day.</p>
+          <button onclick="showPD('intro')">Intro Session</button>
+          <button onclick="showPD('plc')">PLC Cycle</button>
+          <button onclick="showPD('coach')">Coaching Cycle</button>
+          <button onclick="showPD('district')">District Rollout</button>
+          <div id="pdOutput" class="callout" style="margin-top:12px;">Select a professional learning format.</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <h3>Communication Toolkit</h3>
+          <p>Use these short explanations with staff, families, school boards, or community partners.</p>
+          <details open><summary>Staff Message</summary><p>Disciplinary literacy is not a separate program. It is the way students learn how to use reading, writing, speaking, listening, viewing, and evidence-based reasoning to think deeply in every subject area.</p></details>
+          <details><summary>Family Message</summary><p>In every class, students are learning how experts in that subject use information. They may analyze data in science, justify reasoning in math, evaluate sources in social studies, or critique creative work in the arts.</p></details>
+          <details><summary>School Board / District Message</summary><p>Disciplinary literacy supports achievement by helping students access complex content, communicate reasoning, evaluate evidence, and apply knowledge across courses, careers, and civic life.</p></details>
+        </div>
+
+        <div class="card">
+          <h3>Equity Check</h3>
+          <p>Before launching a strategy or unit, ask:</p>
+          <ul>
+            <li>Whose voices, cultures, communities, and experiences are represented?</li>
+            <li>What background knowledge is assumed?</li>
+            <li>Which students may need language, visual, discussion, or vocabulary supports?</li>
+            <li>How will students show understanding in more than one way?</li>
+            <li>How will student voice shape the task, question, or product?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources">
+      <div class="section-title">
+        <div>
+          <h2>Resource Hub</h2>
+          <p class="note">Use these links to return to the source documents and public Literacy Essentials materials.</p>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card quick-links">
+          <h3>Core 6–12 Classroom Resource</h3>
+          <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_6-12_080521_electronic.pdf" target="_blank">Essential Instructional Practices for Disciplinary Literacy in the Secondary Classroom</a>
+          <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_introduction_010120-final.pdf" target="_blank">Introduction to the MAISA GELN Essential Practices</a>
+        </div>
+        <div class="card quick-links">
+          <h3>Leadership and School-Wide Resource</h3>
+          <a href="https://gomaisa-cdn.fxbrt.com/downloads/literacy_essentials/school-wide_6-12_literacy_practices_052722.pdf" target="_blank">Essential School-Wide Practices in Disciplinary Literacy: Grades 6–12</a>
+          <a href="https://literacyessentials.org/literacy-essentials/the-essentials/essential-instructional-practices-for-disciplinary-literacy-grades-6-to-12/" target="_blank">Literacy Essentials 6–12 Disciplinary Literacy Page</a>
+        </div>
+        <div class="card quick-links">
+          <h3>Preparation and Beyond Core</h3>
+          <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/a_tool_to_support_educator_prep_programs.pdf" target="_blank">Tool to Support Educator Preparation Programs</a>
+          <a href="https://drive.google.com/file/d/13E1ChMFLzIsfKa7LPWIK3x1PBNwSyAEk/view" target="_blank">User-Provided Google Drive Resource</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Built as a practical reference dashboard based on MAISA/GELN and Literacy Essentials 6–12 disciplinary literacy resources. Use locally, adapt for PLCs, or print selected sections.
+  </footer>
+
+  <script>
+    const plannerPrompts = {
+      science: [
+        'Unit Phenomenon / Driving Question',
+        'Key Texts, Data, Graphs, Models, or Media',
+        'Disciplinary Literacy Strategy (CER, modeling, data analysis, scientific argument)',
+        'How Students Will Read / View Like Scientists',
+        'How Students Will Discuss Evidence',
+        'How Students Will Write or Communicate Scientific Reasoning',
+        'Vocabulary, Symbols, and Language Supports',
+        'Assessment Evidence and Student Work to Collect'
+      ],
+      math: [
+        'Core Problem, Task, or Mathematical Question',
+        'Representations Students Will Use (equations, graphs, tables, diagrams)',
+        'Disciplinary Literacy Strategy (justification, proof, comparison, explanation)',
+        'How Students Will Read Mathematical Text or Worked Examples',
+        'How Students Will Discuss Strategies and Reasoning',
+        'How Students Will Write Explanations or Justifications',
+        'Vocabulary, Symbols, and Precision Supports',
+        'Assessment Evidence and Student Work to Collect'
+      ],
+      social: [
+        'Compelling Historical / Civic / Geographic Question',
+        'Primary and Secondary Sources',
+        'Disciplinary Literacy Strategy (sourcing, contextualization, corroboration, close reading)',
+        'How Students Will Analyze Perspective, Bias, or Reliability',
+        'How Students Will Discuss Competing Interpretations',
+        'How Students Will Write an Evidence-Based Argument',
+        'Vocabulary, Concepts, and Context Supports',
+        'Assessment Evidence and Student Work to Collect'
+      ],
+      ela: [
+        'Text(s), Genre, or Essential Question',
+        'Reading Focus (theme, craft, structure, purpose, rhetoric)',
+        'Disciplinary Literacy Strategy (close reading, annotation, evidence selection, literary analysis)',
+        'How Students Will Analyze Author Choices',
+        'How Students Will Discuss Interpretations',
+        'How Students Will Write for Audience and Purpose',
+        'Vocabulary, Language, and Text Structure Supports',
+        'Assessment Evidence and Student Work to Collect'
+      ],
+      cte: [
+        'Real-World Workplace Task or Problem',
+        'Technical Texts, Tools, Manuals, Procedures, or Standards',
+        'Disciplinary Literacy Strategy (technical reading, procedure writing, diagnosis, recommendation)',
+        'How Students Will Read or Use Industry Documents',
+        'How Students Will Discuss Options, Constraints, Risks, or Solutions',
+        'How Students Will Write a Report, Recommendation, Procedure, or Reflection',
+        'Industry Vocabulary, Tools, and Safety Language Supports',
+        'Assessment Evidence and Student Work to Collect'
+      ],
+      arts: [
+        'Focus Work, Performance, Piece, Design, or Creative Problem',
+        'Texts / Media / Models Students Will Analyze',
+        'Disciplinary Literacy Strategy (critique, artist statement, interpretation, visual analysis)',
+        'How Students Will Read, View, Listen, or Analyze Like Artists',
+        'How Students Will Discuss Technique, Style, and Impact',
+        'How Students Will Write or Present an Artist Statement / Critique',
+        'Vocabulary, Technique, and Audience Supports',
+        'Assessment Evidence and Student Work to Collect'
+      ]
+    };
+
+    function loadPlannerPrompts() {
+      const subject = document.getElementById('plannerSubject').value;
+      const holder = document.getElementById('plannerPromptFields');
+      holder.innerHTML = '';
+      plannerPrompts[subject].forEach((prompt, index) => {
+        const block = document.createElement('div');
+        block.innerHTML = `
+          <label><strong>${index + 1}. ${prompt}</strong></label>
+          <textarea class="plannerField" data-prompt="${prompt}" rows="5" style="width:100%; border:1px solid var(--border); border-radius:12px; padding:12px; margin:6px 0 12px;" placeholder="Type your plan here..."></textarea>
+        `;
+        holder.appendChild(block);
+      });
+      document.getElementById('plannerStatus').innerHTML = 'Loaded subject-specific prompts for <strong>' + document.getElementById('plannerSubject').selectedOptions[0].text + '</strong>.';
+    }
+
+    function collectPlannerData() {
+      const fields = Array.from(document.querySelectorAll('.plannerField')).map(field => ({
+        prompt: field.dataset.prompt,
+        response: field.value
+      }));
+      return {
+        subject: document.getElementById('plannerSubject').value,
+        subjectLabel: document.getElementById('plannerSubject').selectedOptions[0].text,
+        title: document.getElementById('plannerTitle').value,
+        teacher: document.getElementById('plannerTeacher').value,
+        course: document.getElementById('plannerCourse').value,
+        time: document.getElementById('plannerTime').value,
+        fields,
+        feedback: document.getElementById('plannerFeedback').value,
+        savedAt: new Date().toLocaleString()
+      };
+    }
+
+    function savePlanner() {
+      const data = collectPlannerData();
+      localStorage.setItem('disciplinaryLiteracyPlanner', JSON.stringify(data));
+      document.getElementById('plannerStatus').innerHTML = '<strong>Saved.</strong> Last saved: ' + data.savedAt;
+    }
+
+    function loadSavedPlanner() {
+      const saved = localStorage.getItem('disciplinaryLiteracyPlanner');
+      if (!saved) {
+        document.getElementById('plannerStatus').innerHTML = 'No saved plan found in this browser.';
+        return;
+      }
+      const data = JSON.parse(saved);
+      document.getElementById('plannerSubject').value = data.subject;
+      loadPlannerPrompts();
+      document.getElementById('plannerTitle').value = data.title || '';
+      document.getElementById('plannerTeacher').value = data.teacher || '';
+      document.getElementById('plannerCourse').value = data.course || '';
+      document.getElementById('plannerTime').value = data.time || '';
+      document.getElementById('plannerFeedback').value = data.feedback || '';
+      const fields = document.querySelectorAll('.plannerField');
+      fields.forEach((field, index) => {
+        field.value = data.fields?.[index]?.response || '';
+      });
+      document.getElementById('plannerStatus').innerHTML = '<strong>Loaded saved plan.</strong> Saved at: ' + (data.savedAt || 'unknown time');
+    }
+
+    function copyPlanner() {
+      const data = collectPlannerData();
+      let output = `${data.subjectLabel} Disciplinary Literacy Plan
+`;
+      output += `Title: ${data.title}
+Teacher/Team: ${data.teacher}
+Grade/Course: ${data.course}
+Time Frame: ${data.time}
+
+`;
+      data.fields.forEach((item, index) => {
+        output += `${index + 1}. ${item.prompt}
+${item.response}
+
+`;
+      });
+      output += `Administrator / Coach Feedback or Next Steps
+${data.feedback}
+`;
+      navigator.clipboard.writeText(output);
+      document.getElementById('plannerStatus').innerHTML = '<strong>Copied.</strong> Paste into a lesson plan, email, Google Doc, or PLC notes.';
+    }
+
+    function clearPlanner() {
+      document.getElementById('plannerTitle').value = '';
+      document.getElementById('plannerTeacher').value = '';
+      document.getElementById('plannerCourse').value = '';
+      document.getElementById('plannerTime').value = '';
+      document.getElementById('plannerFeedback').value = '';
+      document.querySelectorAll('.plannerField').forEach(field => field.value = '');
+      document.getElementById('plannerStatus').innerHTML = 'Planner cleared. Saved browser copy was not deleted unless you save again.';
+    }
+
+    function copyWalkthrough() {
+      const notes = document.getElementById('walkthroughNotes').value;
+      if (!notes.trim()) {
+        document.getElementById('walkthroughStatus').innerText = 'Add walkthrough notes first.';
+        return;
+      }
+      navigator.clipboard.writeText(notes);
+      document.getElementById('walkthroughStatus').innerText = 'Walkthrough notes copied to clipboard.';
+    }
+
+    const pdMenus = {
+      intro: '<strong>Intro Session:</strong><ol><li>Define disciplinary literacy.</li><li>Compare what literacy looks like across subjects.</li><li>Review one classroom practice and one school-wide practice.</li><li>Have teachers identify one upcoming lesson to revise.</li></ol>',
+      plc: '<strong>PLC Cycle:</strong><ol><li>Select one shared literacy focus.</li><li>Plan a common routine or task.</li><li>Teach and collect student work.</li><li>Analyze evidence and adjust instruction.</li></ol>',
+      coach: '<strong>Coaching Cycle:</strong><ol><li>Set a teacher-selected goal.</li><li>Co-plan a disciplinary literacy routine.</li><li>Observe for student evidence.</li><li>Reflect and plan next steps.</li></ol>',
+      district: '<strong>District Rollout:</strong><ol><li>Establish shared vision and language.</li><li>Identify pilot teams or buildings.</li><li>Create common tools and look-fors.</li><li>Use evidence to scale supports over time.</li></ol>'
+    };
+
+    function showPD(type) {
+      document.getElementById('pdOutput').innerHTML = pdMenus[type];
+    }
+
+    loadPlannerPrompts();
+
+    const buttons = document.querySelectorAll('.filter');
+    const cards = document.querySelectorAll('.practice');
+    const search = document.getElementById('search');
+
+    function applyFilters() {
+      const active = document.querySelector('.filter.active').dataset.filter;
+      const term = search.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const tags = card.dataset.tags.toLowerCase();
+        const text = card.innerText.toLowerCase();
+        const roleMatch = active === 'all' || tags.includes(active);
+        const searchMatch = !term || text.includes(term) || tags.includes(term);
+        card.style.display = roleMatch && searchMatch ? 'block' : 'none';
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+      });
+    });
+
+    search.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>
