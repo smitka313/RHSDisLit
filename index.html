@@ -6,74 +6,76 @@
   <title>6–12 Disciplinary Literacy Dashboard</title>
   <style>
     :root {
-      --teal: #b30000;
-      --dark: #000000;
-      --blue: #8c0000;
-      --green: #d32f2f;
-      --gold: #ff4d4d;
-      --light: #fff5f5;
-      --card: #ffffff;
+      --red: #b30000;
+      --red-dark: #7a0000;
+      --black: #000000;
+      --white: #ffffff;
+      --light: #fafafa;
+      --soft-red: #fff4f4;
       --ink: #1a1a1a;
-      --muted: #555555;
-      --border: #e0e0e0;
-      --shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+      --muted: #5f6368;
+      --border: #e5e5e5;
+      --shadow: 0 8px 20px rgba(0,0,0,.08);
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--ink);
-      background: linear-gradient(180deg, #eaf4f4 0%, #f8fbfb 45%, #ffffff 100%);
+      background: var(--light);
       line-height: 1.5;
     }
 
     header {
-      background: linear-gradient(135deg, var(--dark), var(--teal));
+      background: linear-gradient(135deg, var(--black), var(--red-dark));
       color: white;
-      padding: 34px 24px 28px;
+      padding: 34px 22px;
     }
 
-    .wrap { max-width: 1240px; margin: 0 auto; }
+    .wrap, section {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
 
     .eyebrow {
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 0.78rem;
-      opacity: 0.88;
+      letter-spacing: .12em;
+      font-size: .76rem;
+      opacity: .9;
       font-weight: 700;
     }
 
     h1 {
       margin: 8px 0 10px;
-      font-size: clamp(2rem, 4vw, 4rem);
+      font-size: clamp(2rem, 4vw, 3.6rem);
       line-height: 1.05;
     }
 
     .subtitle {
-      max-width: 900px;
-      font-size: 1.1rem;
-      opacity: 0.95;
+      max-width: 850px;
+      font-size: 1.08rem;
+      opacity: .95;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-top: 24px;
+      gap: 12px;
+      margin-top: 22px;
     }
 
     .hero-card {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.24);
-      border-radius: 18px;
-      padding: 16px;
-      backdrop-filter: blur(5px);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 16px;
+      padding: 14px;
     }
 
-    .hero-card strong { display: block; font-size: 1.2rem; }
-    .hero-card span { font-size: 0.92rem; opacity: 0.92; }
+    .hero-card strong { display:block; font-size:1.05rem; }
+    .hero-card span { font-size:.9rem; opacity:.9; }
 
     nav {
       position: sticky;
@@ -81,200 +83,173 @@
       z-index: 20;
       background: white;
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 4px 12px rgba(7,59,76,0.06);
+      box-shadow: 0 3px 10px rgba(0,0,0,.05);
     }
 
     .tabs {
+      max-width: 1180px;
+      margin: 0 auto;
       display: flex;
       overflow-x: auto;
-      gap: 8px;
-      padding: 10px 20px;
-      max-width: 1240px;
-      margin: 0 auto;
+      gap: 6px;
+      padding: 9px 18px;
     }
 
     .tabs a {
       white-space: nowrap;
       text-decoration: none;
-      color: var(--dark);
+      color: var(--black);
       font-weight: 700;
-      padding: 10px 14px;
+      font-size: .9rem;
+      padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid transparent;
     }
 
-    .tabs a:hover { background: var(--light); border-color: var(--border); }
+    .tabs a:hover { background: var(--soft-red); color: var(--red-dark); }
 
-    main { padding: 28px 20px 60px; }
+    main { padding: 24px 18px 56px; }
 
-    section {
-      max-width: 1240px;
-      margin: 0 auto 32px;
-    }
+    section { margin-bottom: 22px; }
 
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      align-items: end;
-      margin-bottom: 14px;
-    }
-
-    h2 {
-      margin: 0;
-      color: var(--dark);
-      font-size: clamp(1.45rem, 2.5vw, 2.3rem);
-    }
-
-    .note {
-      color: var(--muted);
-      max-width: 780px;
-      margin: 6px 0 0;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card);
+    .section-shell {
+      background: white;
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
+      border-radius: 22px;
       box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .card h3 {
-      margin: 0 0 8px;
-      color: var(--teal);
-      font-size: 1.18rem;
+    .section-header {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--border);
+      background: white;
     }
+
+    .section-header h2 {
+      margin: 0;
+      color: var(--black);
+      font-size: clamp(1.35rem, 2.4vw, 2rem);
+    }
+
+    .section-header .note {
+      margin: 5px 0 0;
+      color: var(--muted);
+      max-width: 850px;
+    }
+
+    .section-body { padding: 18px 22px 22px; }
+
+    .grid-3, .grid-2, .role-band, .practice-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .role-band { grid-template-columns: repeat(3, 1fr); }
+    .practice-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card, .practice {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .card h3, .practice h3 {
+      margin: 0 0 8px;
+      color: var(--red-dark);
+      font-size: 1.08rem;
+    }
+
+    .card p, .practice p { margin-top: 6px; }
+    ul, ol { padding-left: 20px; }
 
     .pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       border-radius: 999px;
-      background: #e8f5f5;
-      color: var(--teal);
-      padding: 5px 10px;
-      font-size: 0.8rem;
+      background: var(--soft-red);
+      color: var(--red-dark);
+      padding: 4px 9px;
+      font-size: .78rem;
       font-weight: 700;
-      margin: 2px 3px 8px 0;
+      margin: 2px 3px 6px 0;
     }
 
     .callout {
-      background: #fff8e6;
-      border: 1px solid #ffe3a1;
-      border-left: 6px solid var(--gold);
-      border-radius: 18px;
-      padding: 18px;
+      background: var(--soft-red);
+      border: 1px solid #ffd7d7;
+      border-left: 5px solid var(--red);
+      border-radius: 14px;
+      padding: 14px;
     }
 
     .toolbar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin: 12px 0 18px;
+      margin: 10px 0 14px;
     }
 
-    button, select, input {
+    button, select, input, textarea {
       font: inherit;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
+      border-radius: 10px;
+      padding: 9px 11px;
       background: white;
     }
 
     button {
       cursor: pointer;
       font-weight: 700;
-      color: var(--dark);
+      color: var(--black);
     }
 
     button.active, button:hover {
-      background: var(--teal);
+      background: var(--red);
       color: white;
-      border-color: var(--teal);
+      border-color: var(--red);
     }
 
-    input { flex: 1; min-width: 220px; }
-
-    .practice-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .practice {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .practice h3 { margin: 0 0 8px; color: var(--dark); }
-    .practice p { margin: 6px 0; }
-    .practice ul { margin: 8px 0 0; padding-left: 18px; }
-
-    .role-band {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    .role {
-      border-top: 8px solid var(--teal);
-    }
-    .role:nth-child(2) { border-top-color: var(--blue); }
-    .role:nth-child(3) { border-top-color: var(--green); }
+    input { flex: 1; min-width: 210px; }
+    textarea { resize: vertical; }
 
     details {
       background: white;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
+      border-radius: 14px;
+      padding: 12px 14px;
       margin-bottom: 10px;
     }
 
     summary {
       cursor: pointer;
       font-weight: 800;
-      color: var(--dark);
+      color: var(--black);
     }
 
     .matrix {
       width: 100%;
       border-collapse: collapse;
       background: white;
-      border-radius: 18px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: var(--shadow);
+      font-size: .95rem;
     }
 
     .matrix th, .matrix td {
       border: 1px solid var(--border);
-      padding: 12px;
+      padding: 10px;
       vertical-align: top;
       text-align: left;
     }
 
-    .matrix th {
-      background: var(--dark);
-      color: white;
-    }
+    .matrix th { background: var(--black); color: white; }
 
     .quick-links a {
       display: block;
-      color: var(--teal);
+      color: var(--red-dark);
       font-weight: 700;
       margin: 8px 0;
       text-decoration: none;
@@ -282,25 +257,36 @@
 
     .quick-links a:hover { text-decoration: underline; }
 
+    .compact-section > .section-body > .grid-3,
+    .compact-section > .section-body > .grid-2 {
+      align-items: start;
+    }
+
+    .mini-note {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
     footer {
-      background: var(--dark);
+      background: var(--black);
       color: white;
-      padding: 20px;
+      padding: 18px;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: .88rem;
     }
 
     @media (max-width: 900px) {
       .hero-grid, .grid-3, .grid-2, .role-band, .practice-list { grid-template-columns: 1fr; }
-      .section-title { display: block; }
-      .matrix { font-size: 0.9rem; }
+      .matrix { font-size: .86rem; }
+      .tabs { padding-left: 12px; }
+      .section-body, .section-header { padding-left: 16px; padding-right: 16px; }
     }
 
     @media print {
-      nav, .toolbar, footer { display: none; }
+      nav, .toolbar, footer, button { display: none; }
       body { background: white; }
-      .card, .practice, .matrix { box-shadow: none; break-inside: avoid; }
-      section { page-break-margin: 20px; }
+      .section-shell, .card, .practice { box-shadow: none; }
+      section, .card, .practice { break-inside: avoid; }
     }
   </style>
 </head>
@@ -321,28 +307,26 @@
 
   <nav>
     <div class="tabs">
-      <a href="#start">Start Here</a>
-      <a href="#practices">10 Classroom Practices</a>
-      <a href="#roles">Role Dashboards</a>
-      <a href="#schoolwide">8 School-Wide Practices</a>
-      <a href="#planning">Planning Tools</a>
-      <a href="#lookfors">Look-Fors</a>
+      <a href="#start">Start</a>
+      <a href="#interactive">Tools</a>
+      <a href="#fillable-planner">Planner</a>
+      <a href="#practices">Practices</a>
+      <a href="#subject-specific">Subjects</a>
+      <a href="#roles">Roles</a>
+      <a href="#rollout-supports">Rollout</a>
       <a href="#resources">Resources</a>
-      <a href="#interactive">Interactive Tools</a>
-      <a href="#fillable-planner">Fillable Planner</a>
-      <a href="#rollout-supports">Rollout Supports</a>
     </div>
   </nav>
 
   <main>
     <section id="start">
-      <div class="section-title">
-        <div>
+      <div class="section-shell compact-section">
+        <div class="section-header">
           <h2>Start Here: What Is Disciplinary Literacy?</h2>
-          <p class="note">Disciplinary literacy means students learn how people in a field read, write, communicate, investigate, evaluate evidence, and produce knowledge. It looks different in biology, mathematics, history, engineering, art, health, and other subjects.</p>
+          <p class="note">$1</p>
         </div>
-      </div>
-      <div class="grid-3">
+        <div class="section-body">
+          <div class="grid-3">
         <div class="card">
           <h3>Core Idea</h3>
           <p>Students do not just “read more.” They learn how experts in each discipline make meaning: scientists interpret data and models, historians corroborate sources, mathematicians justify reasoning, and artists critique choices.</p>
@@ -366,13 +350,14 @@
           </ul>
         </div>
       </div>
-    </section>
-
-    <section id="practices">
-      <div class="section-title">
-        <div>
+        </div>
+     <section id="practices">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>10 Essential Classroom Practices</h2>
-          <p class="note">Filter by role or search for a strategy. These practices are adapted for practical classroom reference across content areas.</p>
+          <p class="note">$1</p>
+        </div>
+        <div class="section-body">
         </div>
       </div>
 
@@ -445,14 +430,14 @@
           <ul><li>Use formative checks tied to the literacy demands of the task.</li><li>Give specific feedback on reasoning, evidence, language, and process.</li><li>Ask students to transfer strategies to new problems and texts.</li></ul>
         </article>
       </div>
-    </section>
-
-    <section id="roles">
-      <div class="section-title">
-        <div>
+      </div>
+    </s<section id="roles">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>Role Dashboards</h2>
-          <p class="note">Use these cards for quick planning by teacher teams, instructional coaches, building administrators, and district leaders.</p>
+          <p class="note">$1</p>
         </div>
+        <div class="section-body">
       </div>
       <div class="role-band">
         <div class="card role">
@@ -489,18 +474,18 @@
           </ul>
         </div>
       </div>
-    </section>
-
-    <section id="schoolwide">
-      <div class="section-title">
-        <div>
+      </div>
+    </s<section id="schoolwide">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>8 Essential School-Wide Practices</h2>
-          <p class="note">These practices move disciplinary literacy from isolated classroom strategy use to a coherent building-wide system.</p>
+          <p class="note">$1</p>
         </div>
+        <div class="section-body">
       </div>
       <div class="grid-2">
-        <details open><summary>1. Literacy Leadership Team</summary><p>Create a team with administrators, teacher leaders, department chairs, library/media specialists, coaches, and support staff. Use data and continuous improvement to guide implementation.</p></details>
-        <details open><summary>2. Collective Responsibility and Safe Climate</summary><p>Develop a shared belief that all students can grow as disciplinary readers, writers, thinkers, and communicators. Build belonging, agency, and culturally responsive environments.</p></details>
+        <details><summary>1. Literacy Leadership Team</summary><p>Create a team with administrators, teacher leaders, department chairs, library/media specialists, coaches, and support staff. Use data and continuous improvement to guide implementation.</p></details>
+        <details><summary>2. Collective Responsibility and Safe Climate</summary><p>Develop a shared belief that all students can grow as disciplinary readers, writers, thinkers, and communicators. Build belonging, agency, and culturally responsive environments.</p></details>
         <details><summary>3. Visible Commitment to Disciplinary Literacy</summary><p>Make reading, writing, speaking, listening, and viewing visible across classrooms, libraries, media centers, and shared school spaces.</p></details>
         <details><summary>4. Ongoing Professional Learning</summary><p>Use job-embedded, collaborative, discipline-specific professional learning that includes modeling, observation, feedback, and reflection.</p></details>
         <details><summary>5. Equitable Academic Support</summary><p>Provide supports in addition to strong core instruction. Differentiate supports based on student strengths and needs, and monitor progress.</p></details>
@@ -508,14 +493,14 @@
         <details><summary>7. High-Quality Resources</summary><p>Ensure access to diverse texts, media, digital tools, curricular resources, libraries, and technology that support literacy in all disciplines.</p></details>
         <details><summary>8. Community Networking</summary><p>Partner with families, local organizations, businesses, libraries, and community groups so students use disciplinary literacy beyond school assignments.</p></details>
       </div>
-    </section>
-
-    <section id="subject-specific">
-      <div class="section-title">
-        <div>
+      </div>
+    </s<section id="subject-specific">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>Subject-Specific Disciplinary Literacy Strategies</h2>
-          <p class="note">These examples highlight how disciplinary literacy looks different across content areas. Use them to support department conversations and classroom planning.</p>
+          <p class="note">$1</p>
         </div>
+        <div class="section-body">
       </div>
       <div class="grid-3">
         <div class="card">
@@ -573,14 +558,14 @@
           </ul>
         </div>
       </div>
-    </section>
-
-    <section id="planning">
-      <div class="section-title">
-        <div>
+      </div>
+    </s<section id="planning">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>Planning Tools</h2>
-          <p class="note">Use these prompts during PLCs, unit planning, walkthrough calibration, coaching cycles, or district curriculum review.</p>
+          <p class="note">$1</p>
         </div>
+        <div class="section-body">
       </div>
       <div class="grid-2">
         <div class="card">
@@ -610,14 +595,14 @@
       <div class="callout" style="margin-top:16px;">
         <strong>Implementation reminder:</strong> Disciplinary literacy should be embedded into the unit and daily content work. It is strongest when students use literacy practices to investigate meaningful questions, build knowledge, and communicate to authentic audiences.
       </div>
-    </section>
-
-    <section id="lookfors">
-      <div class="section-title">
-        <div>
+      </div>
+    </s<section id="lookfors">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>Walkthrough and Coaching Look-Fors</h2>
-          <p class="note">Use this matrix as a non-evaluative calibration tool for coaching, self-reflection, and leadership team learning walks.</p>
+          <p class="note">$1</p>
         </div>
+        <div class="section-body">
       </div>
       <table class="matrix">
         <thead>
@@ -631,13 +616,14 @@
           <tr><td><strong>Equity and Belonging</strong></td><td>Participation is uneven or dependent on prior background knowledge.</td><td>Scaffolds support access for many students.</td><td>Tasks leverage students’ identities, languages, cultures, strengths, and communities as assets.</td></tr>
         </tbody>
       </table>
-    </section>
-
-    <section id="interactive">
-      <div class="section-title">
-        <div>
-          <h2>Interactive Rollout Tools</h2>
-          <p class="note">Use these quick tools during planning, PLC meetings, coaching conversations, administrator walkthroughs, or district rollout sessions.</p>
+        </div>
+     <section id="interactive">
+      <div class="section-shell">
+        <div class="section-header">
+          <h2>Interactive Tools</h2>
+          <p class="note">$1</p>
+        </div>
+        <div class="section-body">
         </div>
       </div>
 
@@ -738,17 +724,15 @@
           <div id="copyOutput" class="note"></div>
         </div>
       </div>
-    </section>
-
-    <section id="fillable-planner">
-      <div class="section-title">
-        <div>
-          <h2>Fillable Digital Planning Template</h2>
-          <p class="note">Complete this directly in the dashboard. Choose a subject area to load subject-specific disciplinary literacy prompts, then save your work in this browser or copy it for a lesson plan, PLC agenda, or administrator review.</p>
-        </div>
       </div>
-
-      <div class="card">
+    </s<section id="fillable-planner">
+      <div class="section-shell">
+        <div class="section-header">
+          <h2>Fillable Digital Planning Template</h2>
+          <p class="note">$1</p>
+        </div>
+        <div class="section-body">
+          <div class="card">class="card">
         <div class="toolbar">
           <select id="plannerSubject" onchange="loadPlannerPrompts()">
             <option value="science">Science</option>
@@ -786,13 +770,14 @@
 
         <div id="plannerStatus" class="callout" style="margin-top:16px;">Select a subject area to begin. Your saved plan stays in this browser.</div>
       </div>
-    </section>
-
-    <section id="rollout-supports">
-      <div class="section-title">
-        <div>
-          <h2>Additional Rollout Supports</h2>
-          <p class="note">These tools help teachers, administrators, coaches, and district teams move from awareness to consistent implementation.</p>
+        </div>
+     <section id="rollout-supports">
+      <div class="section-shell">
+        <div class="section-header">
+          <h2>Rollout Supports</h2>
+          <p class="note">$1</p>
+        </div>
+        <div class="section-body">
         </div>
       </div>
 
@@ -815,7 +800,7 @@
 
         <div class="card">
           <h3>Common Language Glossary</h3>
-          <details open><summary>Disciplinary Literacy</summary><p>Reading, writing, thinking, speaking, listening, and viewing in ways that are specific to a discipline or field.</p></details>
+          <details><summary>Disciplinary Literacy</summary><p>Reading, writing, thinking, speaking, listening, and viewing in ways that are specific to a discipline or field.</p></details>
           <details><summary>Authentic Text</summary><p>Any text, data set, model, visual, media source, tool, or representation used by people in the field.</p></details>
           <details><summary>Evidence-Based Reasoning</summary><p>Using evidence from texts, data, observations, models, or sources to support a claim, explanation, solution, or interpretation.</p></details>
           <details><summary>Scaffold</summary><p>A temporary support that helps students access complex disciplinary thinking until they can perform more independently.</p></details>
@@ -852,7 +837,7 @@ Possible next step:"></textarea>
         <div class="card">
           <h3>Communication Toolkit</h3>
           <p>Use these short explanations with staff, families, school boards, or community partners.</p>
-          <details open><summary>Staff Message</summary><p>Disciplinary literacy is not a separate program. It is the way students learn how to use reading, writing, speaking, listening, viewing, and evidence-based reasoning to think deeply in every subject area.</p></details>
+          <details><summary>Staff Message</summary><p>Disciplinary literacy is not a separate program. It is the way students learn how to use reading, writing, speaking, listening, viewing, and evidence-based reasoning to think deeply in every subject area.</p></details>
           <details><summary>Family Message</summary><p>In every class, students are learning how experts in that subject use information. They may analyze data in science, justify reasoning in math, evaluate sources in social studies, or critique creative work in the arts.</p></details>
           <details><summary>School Board / District Message</summary><p>Disciplinary literacy supports achievement by helping students access complex content, communicate reasoning, evaluate evidence, and apply knowledge across courses, careers, and civic life.</p></details>
         </div>
@@ -869,14 +854,14 @@ Possible next step:"></textarea>
           </ul>
         </div>
       </div>
-    </section>
-
-    <section id="resources">
-      <div class="section-title">
-        <div>
+      </div>
+    </s<section id="resources">
+      <div class="section-shell">
+        <div class="section-header">
           <h2>Resource Hub</h2>
-          <p class="note">Use these links to return to the source documents and public Literacy Essentials materials.</p>
+          <p class="note">$1</p>
         </div>
+        <div class="section-body">
       </div>
       <div class="grid-3">
         <div class="card quick-links">
@@ -894,6 +879,7 @@ Possible next step:"></textarea>
           <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/a_tool_to_support_educator_prep_programs.pdf" target="_blank">Tool to Support Educator Preparation Programs</a>
           <a href="https://drive.google.com/file/d/13E1ChMFLzIsfKa7LPWIK3x1PBNwSyAEk/view" target="_blank">User-Provided Google Drive Resource</a>
         </div>
+      </div>
       </div>
     </section>
   </main>
