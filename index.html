@@ -147,12 +147,15 @@
 
     .hero {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
       gap: 14px;
+      min-width: 0;
     }
 
     .welcome {
       padding: 26px 26px 18px;
+      min-width: 0;
+      overflow: visible;
     }
 
     .welcome h2 {
@@ -184,7 +187,7 @@
       gap: 14px;
     }
 
-    .card-grid { grid-template-columns: repeat(4, 1fr); }
+    .card-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
     .audience-grid { grid-template-columns: repeat(3, 1fr); }
     .tool-grid { grid-template-columns: repeat(6, 1fr); }
     .grid-2 { grid-template-columns: repeat(2, 1fr); }
@@ -200,10 +203,12 @@
 
     .mini-card {
       display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 12px;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 14px;
       min-height: 112px;
       align-items: start;
+      overflow: visible;
+      word-break: normal;
     }
 
     .icon-badge {
@@ -234,11 +239,14 @@
       font-size: .82rem;
       text-transform: uppercase;
       margin-bottom: 3px;
+      overflow-wrap: normal;
     }
 
     .mini-card span, .tool-card span {
       font-size: .86rem;
       color: var(--ink);
+      overflow-wrap: normal;
+      word-break: normal;
     }
 
     .audience-card {
