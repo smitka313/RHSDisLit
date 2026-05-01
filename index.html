@@ -33,13 +33,14 @@
       background: var(--black);
       color: white;
       display: grid;
-      grid-template-columns: 330px 1fr;
-      align-items: center;
+      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+      align-items: stretch;
       min-height: 96px;
       position: sticky;
       top: 0;
       z-index: 50;
       box-shadow: 0 4px 14px rgba(0,0,0,.2);
+      overflow: visible;
     }
 
     .brand {
@@ -66,27 +67,32 @@
     }
 
     .brand h1 {
-      font-size: 1.45rem;
-      line-height: 1.05;
+      font-size: clamp(1.05rem, 2vw, 1.45rem);
+      line-height: 1.08;
       margin: 0;
       text-transform: uppercase;
       letter-spacing: .02em;
+      overflow-wrap: normal;
     }
 
     .brand p {
       margin: 6px 0 0;
       color: #ff3333;
-      font-size: .78rem;
+      font-size: clamp(.66rem, 1.5vw, .78rem);
       text-transform: uppercase;
       font-weight: 800;
       letter-spacing: .04em;
+      line-height: 1.2;
     }
 
     nav {
-      height: 96px;
+      min-height: 96px;
       display: flex;
       align-items: stretch;
       overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
     }
 
     nav a {
@@ -94,11 +100,14 @@
       text-decoration: none;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 9px;
-      padding: 0 18px;
+      padding: 0 16px;
       font-weight: 700;
       white-space: nowrap;
       border-left: 1px solid rgba(255,255,255,.08);
+      min-width: max-content;
+      line-height: 1.2;
     }
 
     nav a:first-child {
@@ -191,9 +200,9 @@
       gap: 14px;
     }
 
-    .card-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+    .card-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
     .audience-grid { grid-template-columns: repeat(3, 1fr); }
-    .tool-grid { grid-template-columns: repeat(6, 1fr); }
+    .tool-grid { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
     .grid-2 { grid-template-columns: repeat(2, 1fr); }
     .grid-3 { grid-template-columns: repeat(3, 1fr); }
     .practice-list { grid-template-columns: repeat(2, 1fr); }
@@ -213,6 +222,7 @@
       align-items: start;
       overflow: visible;
       word-break: normal;
+      min-width: 0;
     }
 
     .icon-badge {
@@ -249,16 +259,19 @@
     .mini-card span, .tool-card span {
       font-size: .86rem;
       color: var(--ink);
-      overflow-wrap: normal;
+      overflow-wrap: break-word;
       word-break: normal;
+      line-height: 1.35;
     }
 
     .audience-card {
       display: grid;
-      grid-template-columns: 88px 1fr;
+      grid-template-columns: 88px minmax(0, 1fr);
       gap: 18px;
       align-items: center;
       min-height: 150px;
+      min-width: 0;
+      overflow: visible;
     }
 
     .audience-card h3, .card h3, .practice h3 {
@@ -274,13 +287,15 @@
     }
 
     .tool-card {
-      min-height: 92px;
+      min-height: 104px;
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 8px;
+      min-width: 0;
+      overflow: visible;
     }
 
     .tool-card .icon-badge {
@@ -313,7 +328,7 @@
     button { cursor: pointer; font-weight: 800; }
     button:hover, button.active { background: var(--red); color: white; border-color: var(--red); }
     .btn:hover { background: var(--red-dark); }
-    input { min-width: 190px; }
+    input { min-width: 190px; max-width: 100%; }
     textarea { resize: vertical; }
 
     .toolbar {
@@ -321,6 +336,17 @@
       gap: 8px;
       flex-wrap: wrap;
       margin: 10px 0 14px;
+      align-items: center;
+    }
+
+    .toolbar > * {
+      max-width: 100%;
+    }
+
+    .toolbar input,
+    .toolbar select,
+    .toolbar button {
+      min-height: 42px;
     }
 
     .callout {
@@ -457,19 +483,116 @@
     }
 
     @media (max-width: 1150px) {
-      header { grid-template-columns: 1fr; position: static; }
-      nav { height: auto; }
-      nav a { padding: 14px 16px; }
+      header {
+        grid-template-columns: 1fr;
+        position: static;
+      }
+      .brand {
+        padding: 14px 18px;
+      }
+      nav {
+        min-height: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        overflow-x: visible;
+      }
+      nav a {
+        min-width: 0;
+        padding: 14px 12px;
+        justify-content: center;
+        border-top: 1px solid rgba(255,255,255,.08);
+      }
       main { grid-template-columns: 1fr; }
       .hero { grid-template-columns: 1fr; }
-      .tool-grid { grid-template-columns: repeat(3, 1fr); }
+      .tool-grid { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
     }
 
     @media (max-width: 850px) {
+      main {
+        padding: 12px;
+      }
+      .brand {
+        align-items: center;
+        gap: 12px;
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        min-height: 64px;
+      }
+      nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      nav a {
+        font-size: .92rem;
+        white-space: normal;
+        text-align: center;
+        min-height: 58px;
+      }
+      .nav-icon {
+        font-size: 1.1rem;
+      }
       .card-grid, .audience-grid, .grid-2, .grid-3, .practice-list { grid-template-columns: 1fr; }
-      .tool-grid { grid-template-columns: repeat(2, 1fr); }
+      .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .audience-card, .spotlight { grid-template-columns: 1fr; }
+      .mini-card {
+        grid-template-columns: 48px minmax(0, 1fr);
+      }
+      .toolbar {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .toolbar input,
+      .toolbar select,
+      .toolbar button {
+        width: 100%;
+      }
       footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        display: grid;
+        grid-template-columns: 58px minmax(0, 1fr);
+        padding: 12px;
+      }
+      .logo {
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
+        min-height: 58px;
+      }
+      nav {
+        grid-template-columns: 1fr;
+      }
+      nav a {
+        justify-content: flex-start;
+        text-align: left;
+        padding: 13px 18px;
+        min-height: 52px;
+      }
+      .welcome, .quick-start, .section-body, .section-header, .panel-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .welcome h2 {
+        font-size: 1.65rem;
+      }
+      .welcome .lead {
+        font-size: 1.05rem;
+      }
+      .card-grid, .tool-grid {
+        grid-template-columns: 1fr;
+      }
+      .mini-card {
+        min-height: auto;
+      }
+      .matrix {
+        display: block;
+        overflow-x: auto;
+        white-space: normal;
+      }
     }
 
     @media print {
