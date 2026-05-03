@@ -1000,4 +1000,92 @@
         <div class="section-header"><h2>Rollout Supports</h2><p>Move from awareness to consistent implementation.</p></div>
         <div class="section-body">
           <div class="grid-2">
-            <div class="card"><h3>Implementation Stages</h3><table class="matrix"><thead><tr><th>Stage</th><th>Next Move</th></tr></thead><tbody><tr><td>Awareness</td><td>Use subject-area examples.</td></tr><tr><td>Exploration</td><td>Try one strategy and examine student work.</td></tr><tr><td>Initial Implementation</td><td>Use common look-fors and coaching.</td></tr><tr><td>Integration</td><td>Build rubrics and exemplars.</td></tr><tr><td>Sustai
+            <div class="card"><h3>Implementation Stages</h3><table class="matrix"><thead><tr><th>Stage</th><th>Next Move</th></tr></thead><tbody><tr><td>Awareness</td><td>Use subject-area examples.</td></tr><tr><td>Exploration</td><td>Try one strategy and examine student work.</td></tr><tr><td>Initial Implementation</td><td>Use common look-fors and coaching.</td></tr><tr><td>Integration</td><td>Build rubrics and exemplars.</td></tr><tr><td>Sustainability</td><td>Embed in curriculum, onboarding, coaching, and leadership routines.</td></tr>
+</tbody></table></div>
+
+<div class="card">
+  <h3>Professional Learning Menu</h3>
+  <button onclick="showPD('intro')">Intro Session</button>
+  <button onclick="showPD('plc')">PLC Cycle</button>
+  <button onclick="showPD('coach')">Coaching Cycle</button>
+  <button onclick="showPD('district')">District Rollout</button>
+  <div id="pdOutput" class="callout">Select a professional learning format.</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="resources">
+  <div class="section-header">
+    <h2>Resources</h2>
+    <p>Access key disciplinary literacy documents and tools.</p>
+  </div>
+  <div class="section-body grid-3 quick-links">
+    <div class="card">
+      <h3>Core 6–12 Classroom Resource</h3>
+      <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_6-12_080521_electronic.pdf" target="_blank">Essential Instructional Practices 6–12 <span>›</span></a>
+      <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_introduction_010120-final.pdf" target="_blank">Introduction to Essential Practices <span>›</span></a>
+    </div>
+    <div class="card">
+      <h3>Leadership Resource</h3>
+      <a href="https://gomaisa-cdn.fxbrt.com/downloads/literacy_essentials/school-wide_6-12_literacy_practices_052722.pdf" target="_blank">School-Wide Practices 6–12 <span>›</span></a>
+      <a href="https://literacyessentials.org/literacy-essentials/the-essentials/essential-instructional-practices-for-disciplinary-literacy-grades-6-to-12/" target="_blank">Literacy Essentials Page <span>›</span></a>
+    </div>
+    <div class="card">
+      <h3>Preparation and Beyond</h3>
+      <a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/a_tool_to_support_educator_prep_programs.pdf" target="_blank">Educator Preparation Tool <span>›</span></a>
+      <a href="https://drive.google.com/file/d/13E1ChMFLzIsfKa7LPWIK3x1PBNwSyAEk/view" target="_blank">User-Provided Google Drive Resource <span>›</span></a>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <span>Roseville High School Disciplinary Literacy Dashboard</span>
+  <span>Every Student. Every Classroom. Every Day.</span>
+</footer>
+
+<button class="quick-fab" onclick="document.getElementById('interactive').scrollIntoView(); generateIdea();" aria-label="Quick idea">⚡ Quick Idea</button>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'});" aria-label="Back to top">↑ Top</button>
+
+<script>
+const taglineSubjects = [
+  'scientist',
+  'historian',
+  'mathematician',
+  'artist',
+  'athlete',
+  'author',
+  'entrepreneur',
+  'chef',
+  'engineer',
+  'musician'
+];
+
+let lastTaglineSubject = '';
+
+function rotateTagline() {
+  const tagline = document.querySelector('.brand p[style*="color:#fff"]');
+  if (!tagline) return;
+
+  const availableSubjects = taglineSubjects.filter(subject => subject !== lastTaglineSubject);
+  const subject = availableSubjects[Math.floor(Math.random() * availableSubjects.length)];
+
+  lastTaglineSubject = subject;
+  tagline.textContent = `Think like a ${subject}`;
+}
+
+rotateTagline();
+setInterval(rotateTagline, 8000);
+
+const backBtn = document.getElementById('backToTop');
+if (backBtn) {
+  window.addEventListener('scroll', () => {
+    backBtn.style.display = window.scrollY > 400 ? 'block' : 'none';
+  });
+}
+</script>
+</body>
+</html>
