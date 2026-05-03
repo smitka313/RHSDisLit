@@ -120,16 +120,18 @@
 
     nav a:hover { background: #181818; }
     .nav-icon {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.05rem;
+      font-size: 1.35rem;
+      line-height: 1;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.14);
       flex-shrink: 0;
+      text-align: center;
     }
 
     nav a:hover .nav-icon,
@@ -187,9 +189,11 @@
     }
 
     .welcome {
-      padding: 26px 26px 18px;
+      padding: 26px;
       min-width: 0;
-      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     .welcome h2 {
@@ -224,6 +228,7 @@
     .card-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
+      align-items: stretch;
     }
 
     @media (max-width: 900px) {
@@ -248,15 +253,13 @@
 
     .mini-card {
       display: grid;
-      grid-template-columns: 40px minmax(0, 1fr);
-      gap: 10px;
-      min-height: 112px;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 12px;
+      min-height: 150px;
+      height: 100%;
       align-items: center;
-      padding: 12px 10px;
+      padding: 18px;
       transition: transform .25s ease-out, box-shadow .25s ease-out, background .25s ease-out;
-      min-width: 0;
-      overflow: hidden;
-      font-weight: 600;
     }
 
     .mini-card * {
@@ -270,30 +273,48 @@
     }
 
     .icon-badge {
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       border-radius: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
       color: white;
-      font-size: 1.25rem;
+      font-size: 38px;
+      line-height: 1;
       font-weight: 900;
       flex-shrink: 0;
       box-shadow: 0 4px 10px rgba(217,0,0,.18);
-      border: 1px solid rgba(255,255,255,.25);
+      overflow: hidden;
+      text-align: center;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", Arial, sans-serif;
     }
 
     .mini-card .icon-badge {
-      width: 38px;
-      height: 38px;
-      font-size: 1rem;
+      width: 46px;
+      height: 46px;
       border-radius: 10px;
       background: var(--soft-red);
       color: var(--red-dark);
       border: 2px solid var(--red);
       box-shadow: none;
+      font-size: 31px;
+    }
+
+    .audience-card .icon-badge {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      font-size: 40px;
+    }
+
+    .tool-card .icon-badge {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      font-size: 43px;
+      margin-bottom: 4px;
     }
 
     .mini-card strong, .tool-card strong {
@@ -348,15 +369,13 @@
     }
 
     .tool-card {
-      min-height: 112px;
+      min-height: 120px;
       text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 8px;
-      min-width: 0;
-      overflow: visible;
+      gap: 10px;
       transition: transform .25s ease-out, box-shadow .25s ease-out, background .25s ease-out;
     }
 
@@ -366,12 +385,24 @@
       background: #f8f8f8;
     }
 
-    .tool-card .icon-badge {
-      width: 52px;
-      height: 52px;
-      font-size: 1.2rem;
+    .tool-card:hover {
+      transform: transl.tool-card .icon-badge {
+      width: 56px;
+      height: 56px;
       border-radius: 16px;
+      display: grid;
+      place-items: center;
       margin-bottom: 2px;
+      /* Fill larger tool boxes */
+      font-size: 34px; /* ~60% of 56px */
+      line-height: 1;
+    }der-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 2px;
+      /* Fill larger tool boxes */
+      font-size: 34px; /* ~60% of 56px */
+      line-height: 1;
     }
 
     .btn {
@@ -767,7 +798,7 @@
       <div id="home" class="hero">
         <section class="welcome">
           <h2>Welcome!</h2>
-          <p class="lead">Support meaningful learning in every Roseville High School classroom with disciplinary literacy.</p>
+          
           <div class="card-grid">
             <a class="mini-card text-link" href="#practices"><span class="icon-badge">📖</span><span><strong>Strategies</strong>Explore effective disciplinary literacy practices.</span></a>
             <a class="mini-card text-link" href="#interactive"><span class="icon-badge">🛠</span><span><strong>Tools</strong>Use interactive tools to plan, reflect, and implement.</span></a>
@@ -969,22 +1000,4 @@
         <div class="section-header"><h2>Rollout Supports</h2><p>Move from awareness to consistent implementation.</p></div>
         <div class="section-body">
           <div class="grid-2">
-            <div class="card"><h3>Implementation Stages</h3><table class="matrix"><thead><tr><th>Stage</th><th>Next Move</th></tr></thead><tbody><tr><td>Awareness</td><td>Use subject-area examples.</td></tr><tr><td>Exploration</td><td>Try one strategy and examine student work.</td></tr><tr><td>Initial Implementation</td><td>Use common look-fors and coaching.</td></tr><tr><td>Integration</td><td>Build rubrics and exemplars.</td></tr><tr><td>Sustainability</td><td>Embed in curriculum, onboarding, and leadership routines.</td></tr></tbody></table></div>
-            <div class="card"><h3>Professional Learning Menu</h3><button onclick="showPD('intro')">Intro Session</button> <button onclick="showPD('plc')">PLC Cycle</button> <button onclick="showPD('coach')">Coaching Cycle</button> <button onclick="showPD('district')">District Rollout</button><div id="pdOutput" class="callout">Select a professional learning format.</div></div>
-          </div>
-          <div class="grid-2" style="margin-top:14px;">
-            <div class="card"><h3>Walkthrough Evidence Capture</h3><textarea id="walkthroughNotes" rows="8" style="width:100%;" placeholder="Observed student task:
-Evidence of disciplinary reading/viewing:
-Evidence of discussion:
-Evidence of writing/reasoning:
-Access and equity supports:
-Possible next step:"></textarea><button style="margin-top:10px;" onclick="copyWalkthrough()">Copy Walkthrough Notes</button><span id="walkthroughStatus" style="margin-left:10px;color:var(--muted);"></span></div>
-            <div class="card"><h3>Communication Toolkit</h3><details><summary>Staff Message</summary><p>Disciplinary literacy is not a separate program. It is how students use reading, writing, speaking, listening, viewing, and evidence-based reasoning to think deeply in every subject area.</p></details><details><summary>Family Message</summary><p>Students are learning how experts in each subject use information, evidence, and communication.</p></details><details><summary>Equity Check</summary><ul><li>Whose voices and experiences are represented?</li><li>What background knowledge is assumed?</li><li>How will students show understanding in more than one way?</li></ul></details></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="resources">
-        <div class="section-header"><h2>Resource Hub</h2><p>Return to the source documents and public Literacy Essentials materials.</p></div>
-        <div class="section-body grid-3 quick-links">
-          <div class="card"><h3>Core 6–12 Classroom Resource</h3><a href="https://gomaisa-cdn.fxbrt.com/downlo
+            <div class="card"><h3>Implementation Stages</h3><table class="matrix"><thead><tr><th>Stage</th><th>Next Move</th></tr></thead><tbody><tr><td>Awareness</td><td>Use subject-area examples.</td></tr><tr><td>Exploration</td><td>Try one strategy and examine student work.</td></tr><tr><td>Initial Implementation</td><td>Use common look-fors and coaching.</td></tr><tr><td>Integration</td><td>Build rubrics and exemplars.</td></tr><tr><td>Sustai
