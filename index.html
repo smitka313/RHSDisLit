@@ -32,10 +32,7 @@
     header {
       background: var(--black);
       color: white;
-      display: grid;
-      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
-      align-items: stretch;
-      min-height: 96px;
+      display: block;
       position: sticky;
       top: 0;
       z-index: 50;
@@ -47,8 +44,9 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 16px 24px;
+      padding: 14px 24px;
       flex-wrap: nowrap;
+      min-height: 92px;
     }
 
     .logo {
@@ -67,8 +65,8 @@
     }
 
     .brand h1 {
-      font-size: clamp(1.05rem, 2vw, 1.45rem);
-      line-height: 1.08;
+      font-size: clamp(1.35rem, 2.4vw, 2rem);
+      line-height: 1.05;
       margin: 0;
       text-transform: uppercase;
       letter-spacing: .02em;
@@ -76,9 +74,9 @@
     }
 
     .brand p {
-      margin: 6px 0 0;
+      margin: 5px 0 0;
       color: #ff3333;
-      font-size: clamp(.66rem, 1.5vw, .78rem);
+      font-size: clamp(.7rem, 1.4vw, .82rem);
       text-transform: uppercase;
       font-weight: 800;
       letter-spacing: .04em;
@@ -86,13 +84,13 @@
     }
 
     nav {
-      min-height: 96px;
-      display: flex;
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       align-items: stretch;
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
+      overflow: visible;
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: #080808;
     }
 
     nav a {
@@ -102,12 +100,18 @@
       align-items: center;
       justify-content: center;
       gap: 9px;
-      padding: 0 16px;
+      padding: 14px 10px;
       font-weight: 700;
-      white-space: nowrap;
+      white-space: normal;
+      text-align: center;
       border-left: 1px solid rgba(255,255,255,.08);
-      min-width: max-content;
+      min-width: 0;
       line-height: 1.2;
+      outline: none;
+    }
+
+    nav a:focus-visible {
+      box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px var(--red);
     }
 
     nav a:first-child {
@@ -115,22 +119,39 @@
     }
 
     nav a:hover { background: #181818; }
-    .nav-icon { font-size: 1.25rem; }
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      flex-shrink: 0;
+    }
+
+    nav a:hover .nav-icon,
+    nav a:first-child .nav-icon {
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.3);
+    }
 
     main {
       max-width: 1500px;
       margin: 0 auto;
       padding: 16px 20px 28px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 330px;
-      gap: 18px;
+      display: block;
     }
 
-    .main-column, .side-column {
+    .main-column {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
+
+    .side-column { display: none; }
 
     section, .panel {
       background: white;
@@ -160,7 +181,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
       gap: 14px;
       min-width: 0;
     }
@@ -200,7 +221,18 @@
       gap: 14px;
     }
 
-    .card-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+    .card-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
     .audience-grid { grid-template-columns: repeat(3, 1fr); }
     .tool-grid { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
     .grid-2 { grid-template-columns: repeat(2, 1fr); }
@@ -216,62 +248,91 @@
 
     .mini-card {
       display: grid;
-      grid-template-columns: 54px minmax(0, 1fr);
-      gap: 14px;
+      grid-template-columns: 40px minmax(0, 1fr);
+      gap: 10px;
       min-height: 112px;
-      align-items: start;
-      overflow: visible;
-      word-break: normal;
+      align-items: center;
+      padding: 12px 10px;
+      transition: transform .25s ease-out, box-shadow .25s ease-out, background .25s ease-out;
+      min-width: 0;
+      overflow: hidden;
+      font-weight: 600;
+    }
+
+    .mini-card * {
       min-width: 0;
     }
 
+    .mini-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      background: #f0f0f0;
+    }
+
     .icon-badge {
-      width: 54px;
-      height: 54px;
-      border-radius: 999px;
-      display: grid;
-      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
       color: white;
-      font-size: 1.45rem;
+      font-size: 1.25rem;
       font-weight: 900;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(217,0,0,.18);
+      border: 1px solid rgba(255,255,255,.25);
     }
 
     .mini-card .icon-badge {
-      width: 42px;
-      height: 42px;
-      font-size: 1.25rem;
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
       border-radius: 10px;
-      background: white;
-      color: var(--red);
+      background: var(--soft-red);
+      color: var(--red-dark);
       border: 2px solid var(--red);
+      box-shadow: none;
     }
 
     .mini-card strong, .tool-card strong {
       color: var(--red-dark);
       display: block;
-      font-size: .82rem;
+      font-size: .74rem;
       text-transform: uppercase;
-      margin-bottom: 3px;
-      overflow-wrap: normal;
+      margin-bottom: 4px;
+      letter-spacing: .03em;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+      word-break: normal;
     }
 
     .mini-card span, .tool-card span {
-      font-size: .86rem;
+      display: block;
+      font-size: .78rem;
       color: var(--ink);
-      overflow-wrap: break-word;
+      line-height: 1.28;
+      overflow-wrap: anywhere;
       word-break: normal;
-      line-height: 1.35;
+      hyphens: auto;
     }
 
     .audience-card {
       display: grid;
-      grid-template-columns: 88px minmax(0, 1fr);
+      grid-template-columns: 78px minmax(0, 1fr);
       gap: 18px;
       align-items: center;
       min-height: 150px;
       min-width: 0;
       overflow: visible;
+      transition: transform .25s ease-out, box-shadow .25s ease-out, background .25s ease-out;
+    }
+
+    .audience-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+      background: #f8f8f8;
     }
 
     .audience-card h3, .card h3, .practice h3 {
@@ -287,7 +348,7 @@
     }
 
     .tool-card {
-      min-height: 104px;
+      min-height: 112px;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -296,38 +357,70 @@
       gap: 8px;
       min-width: 0;
       overflow: visible;
+      transition: transform .25s ease-out, box-shadow .25s ease-out, background .25s ease-out;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+      background: #f8f8f8;
     }
 
     .tool-card .icon-badge {
-      width: 46px;
-      height: 46px;
-      font-size: 1.1rem;
-      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      font-size: 1.2rem;
+      border-radius: 16px;
+      margin-bottom: 2px;
     }
 
     .btn {
       border: 0;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
       color: white;
-      padding: 11px 18px;
-      border-radius: 8px;
+      padding: 12px 20px;
+      border-radius: 10px;
       font-weight: 900;
       cursor: pointer;
       min-width: 210px;
-      box-shadow: 0 4px 12px rgba(217,0,0,.18);
+      box-shadow: 0 5px 14px rgba(217,0,0,.22);
+      outline: none;
+      letter-spacing: .01em;
+    }
+
+    .btn:focus-visible {
+      box-shadow: 0 0 0 3px rgba(217,0,0,.35);
     }
 
     button, select, input, textarea {
       font: inherit;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 9px 11px;
+      padding: 10px 12px;
       background: white;
     }
 
-    button { cursor: pointer; font-weight: 800; }
-    button:hover, button.active { background: var(--red); color: white; border-color: var(--red); }
-    .btn:hover { background: var(--red-dark); }
+    button {
+      cursor: pointer;
+      font-weight: 800;
+      border: 1px solid var(--border);
+      transition: background .2s ease-out, color .2s ease-out, border-color .2s ease-out, transform .2s ease-out, box-shadow .2s ease-out;
+    }
+
+    button:hover,
+    button.active {
+      background: var(--red);
+      color: white;
+      border-color: var(--red);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,.1);
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #f52222, var(--red-dark));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(217,0,0,.25);
+    }
     input { min-width: 190px; max-width: 100%; }
     textarea { resize: vertical; }
 
@@ -395,6 +488,30 @@
     }
 
     .panel-body { padding: 18px; }
+
+    .inspiration-strip {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .inspiration-strip .panel-title {
+      display: flex;
+      align-items: center;
+    }
+
+    .inspiration-strip .panel-body {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .inspiration-strip .quote {
+      margin: 0;
+      flex: 1;
+      min-width: 260px;
+    }
 
     .quote {
       font-style: italic;
@@ -482,25 +599,48 @@
       font-weight: 700;
     }
 
+    .back-to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      box-shadow: 0 6px 16px rgba(0,0,0,.2);
+      cursor: pointer;
+      display: none;
+    }
+
+    .quick-fab {
+      position: fixed;
+      right: 18px;
+      bottom: 70px;
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(0,0,0,.25);
+      cursor: pointer;
+    }
+
     @media (max-width: 1150px) {
       header {
-        grid-template-columns: 1fr;
         position: static;
       }
       .brand {
         padding: 14px 18px;
       }
       nav {
-        min-height: auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-        overflow-x: visible;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       nav a {
-        min-width: 0;
         padding: 14px 12px;
-        justify-content: center;
-        border-top: 1px solid rgba(255,255,255,.08);
+        min-height: 58px;
       }
       main { grid-template-columns: 1fr; }
       .hero { grid-template-columns: 1fr; }
@@ -526,9 +666,7 @@
       }
       nav a {
         font-size: .92rem;
-        white-space: normal;
-        text-align: center;
-        min-height: 58px;
+        min-height: 56px;
       }
       .nav-icon {
         font-size: 1.1rem;
@@ -596,7 +734,7 @@
     }
 
     @media print {
-      header, footer, .side-column, .toolbar, button { display: none; }
+      header, footer, .toolbar, button { display: none; }
       main { display: block; max-width: 100%; padding: 0; }
       section, .panel, .card, .practice { box-shadow: none; break-inside: avoid; }
     }
@@ -609,17 +747,12 @@
         <img src="https://rosevillepride.org/downloads/roseville_high_school/roseville_high_logo_2022.png" alt="Roseville High School Logo" style="width:100%; height:100%; object-fit:contain; border-radius:50%;">
       </div>
       <div>
-        <h1>Disciplinary Literacy<br>Dashboard</h1>
+        <h1>Disciplinary Literacy Dashboard</h1>
         <p>Roseville High School • Read. Think. Communicate. Succeed.</p>
-        <p style="color:#fff; opacity:.9; font-weight:700; font-size:.78rem; margin-top:6px;">Think like a scientist • Argue like a historian • Reason like a mathematician</p>
+        <p style="color:#fff; opacity:.9; font-weight:700; font-size:.78rem; margin-top:5px;">Think like a scientist • Argue like a historian • Reason like a mathematician</p>
       </div>
     </div>
-      <div>
-        <h1>Disciplinary Literacy<br>Dashboard</h1>
-        <p>Roseville High School • Read. Think. Communicate. Succeed.</p>
-      </div>
-    </div>
-    <nav>
+    <nav aria-label="Primary navigation">
       <a href="#home"><span class="nav-icon">⌂</span>Home</a>
       <a href="#practices"><span class="nav-icon">📖</span>Strategies</a>
       <a href="#interactive"><span class="nav-icon">🛠</span>Interactive Tools</a>
@@ -647,9 +780,17 @@
           <h2>⚡ Quick Start</h2>
           <p><strong>Need an idea you can use tomorrow?</strong></p>
           <p>Get a quick strategy, example, and classroom application in seconds.</p>
-          <button class="btn" onclick="document.getElementById('interactive').scrollIntoView(); generateIdea();">Give Me One Strategy</button>
+          <button class="btn" aria-label="Generate one quick classroom strategy" onclick="document.getElementById('interactive').scrollIntoView(); generateIdea();">Give Me One Strategy</button>
         </section>
       </div>
+
+      <section class="inspiration-strip">
+        <div class="panel-title">❝ Daily Inspiration</div>
+        <div class="panel-body">
+          <p class="quote">Disciplinary literacy is not an add-on. It is how students access, engage with, and make meaning in our content.</p>
+          <p style="color:var(--red-dark);font-weight:900;margin:0;">– MAISA / GELN</p>
+        </div>
+      </section>
 
       <section id="audience">
         <div class="section-header">
@@ -846,86 +987,4 @@ Possible next step:"></textarea><button style="margin-top:10px;" onclick="copyWa
       <section id="resources">
         <div class="section-header"><h2>Resource Hub</h2><p>Return to the source documents and public Literacy Essentials materials.</p></div>
         <div class="section-body grid-3 quick-links">
-          <div class="card"><h3>Core 6–12 Classroom Resource</h3><a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_6-12_080521_electronic.pdf" target="_blank">Essential Instructional Practices for Disciplinary Literacy 6–12 <span>›</span></a><a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_introduction_010120-final.pdf" target="_blank">Introduction to Essential Practices <span>›</span></a></div>
-          <div class="card"><h3>Leadership Resource</h3><a href="https://gomaisa-cdn.fxbrt.com/downloads/literacy_essentials/school-wide_6-12_literacy_practices_052722.pdf" target="_blank">School-Wide Practices 6–12 <span>›</span></a><a href="https://literacyessentials.org/literacy-essentials/the-essentials/essential-instructional-practices-for-disciplinary-literacy-grades-6-to-12/" target="_blank">Literacy Essentials Page <span>›</span></a></div>
-          <div class="card"><h3>Preparation and Beyond</h3><a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/a_tool_to_support_educator_prep_programs.pdf" target="_blank">Educator Preparation Tool <span>›</span></a><a href="https://drive.google.com/file/d/13E1ChMFLzIsfKa7LPWIK3x1PBNwSyAEk/view" target="_blank">User-Provided Google Drive Resource <span>›</span></a></div>
-        </div>
-      </section>
-    </div>
-
-    <aside class="side-column">
-      <div class="panel"><div class="panel-title">❝ Daily Inspiration</div><div class="panel-body"><p class="quote">Disciplinary literacy is not an add-on. It is how students access, engage with, and make meaning in our content.</p><p style="color:var(--red-dark);font-weight:900;">– MAISA / GELN</p></div></div>
-      <div class="panel"><div class="panel-body"><h3>📅 Upcoming</h3><div class="event"><div class="date-box"><span>MAY</span><strong>23</strong></div><div><strong>PLC Meeting</strong><br><span>Focus: Text-Based Discussion<br>3:30 PM – 4:30 PM</span></div></div><div class="event"><div class="date-box"><span>MAY</span><strong>30</strong></div><div><strong>Instructional Rounds</strong><br><span>Disciplinary Literacy Focus<br>All Day</span></div></div><div class="event"><div class="date-box"><span>JUN</span><strong>6</strong></div><div><strong>Department Planning</strong><br><span>Reflect & Plan Next Steps<br>8:00 AM – 10:00 AM</span></div></div></div></div>
-      <div class="panel quick-links"><div class="panel-body"><h3>🔗 Quick Links</h3><a href="https://gomaisa-cdn.fxbrt.com/downloads/gelndocs/dle_6-12_080521_electronic.pdf" target="_blank">MAISA Disciplinary Literacy 6–12 <span>›</span></a><a href="https://literacyessentials.org/" target="_blank">GELN Literacy Essentials <span>›</span></a><a href="#subject-specific">Subject-Specific Examples <span>›</span></a><a href="#fillable-planner">Planning Templates <span>›</span></a><a href="#rollout-supports">Professional Learning Menu <span>›</span></a></div></div>
-      <div class="panel"><div class="panel-body"><h3>🏆 Implementation Spotlight</h3><div class="spotlight"><div class="spotlight-graphic">🌹</div><div><h3>Roseville High School</h3><p>Teachers are embedding text-based discussion, evidence protocols, disciplinary writing, and student reasoning across content areas.</p><a class="text-link" href="#rollout-supports">View Rollout Supports →</a></div></div></div></div>
-    </aside>
-  </main>
-
-  <footer><span>Roseville High School Disciplinary Literacy Dashboard</span><span>Every Student. Every Classroom. Every Day.</span></footer>
-
-  <script>
-    const plannerPrompts = {
-      science: ['Unit Phenomenon / Driving Question','Key Texts, Data, Graphs, Models, or Media','Disciplinary Literacy Strategy','How Students Will Read / View Like Scientists','How Students Will Discuss Evidence','How Students Will Write Scientific Reasoning','Vocabulary, Symbols, and Language Supports','Assessment Evidence and Student Work to Collect'],
-      math: ['Core Problem, Task, or Mathematical Question','Representations Students Will Use','Disciplinary Literacy Strategy','How Students Will Read Mathematical Text or Worked Examples','How Students Will Discuss Strategies and Reasoning','How Students Will Write Explanations or Justifications','Vocabulary, Symbols, and Precision Supports','Assessment Evidence and Student Work to Collect'],
-      social: ['Compelling Historical / Civic / Geographic Question','Primary and Secondary Sources','Disciplinary Literacy Strategy','How Students Will Analyze Perspective, Bias, or Reliability','How Students Will Discuss Competing Interpretations','How Students Will Write an Evidence-Based Argument','Vocabulary, Concepts, and Context Supports','Assessment Evidence and Student Work to Collect'],
-      ela: ['Text(s), Genre, or Essential Question','Reading Focus','Disciplinary Literacy Strategy','How Students Will Analyze Author Choices','How Students Will Discuss Interpretations','How Students Will Write for Audience and Purpose','Vocabulary, Language, and Text Structure Supports','Assessment Evidence and Student Work to Collect'],
-      cte: ['Real-World Workplace Task or Problem','Technical Texts, Tools, Manuals, Procedures, or Standards','Disciplinary Literacy Strategy','How Students Will Read or Use Industry Documents','How Students Will Discuss Options, Constraints, Risks, or Solutions','How Students Will Write a Report, Recommendation, Procedure, or Reflection','Industry Vocabulary, Tools, and Safety Language Supports','Assessment Evidence and Student Work to Collect'],
-      arts: ['Focus Work, Performance, Piece, Design, or Creative Problem','Texts / Media / Models Students Will Analyze','Disciplinary Literacy Strategy','How Students Will Analyze Like Artists','How Students Will Discuss Technique, Style, and Impact','How Students Will Write or Present an Artist Statement / Critique','Vocabulary, Technique, and Audience Supports','Assessment Evidence and Student Work to Collect']
-    };
-
-    function loadPlannerPrompts() {
-      const subject = document.getElementById('plannerSubject').value;
-      const holder = document.getElementById('plannerPromptFields');
-      holder.innerHTML = '';
-      plannerPrompts[subject].forEach((prompt, index) => {
-        const block = document.createElement('div');
-        block.innerHTML = `<label><strong>${index + 1}. ${prompt}</strong></label><textarea class="plannerField" data-prompt="${prompt}" rows="4" style="width:100%; margin-top:6px;" placeholder="Type your plan here..."></textarea>`;
-        holder.appendChild(block);
-      });
-      document.getElementById('plannerStatus').innerHTML = 'Loaded prompts for <strong>' + document.getElementById('plannerSubject').selectedOptions[0].text + '</strong>.';
-    }
-
-    const ideaBank = {
-      science: { reading:'Have students annotate a graph, model, or short scientific article by marking claim, evidence, uncertainty, and connection to the unit phenomenon.', writing:'Use Claim-Evidence-Reasoning after a lab, simulation, or data analysis.', discussion:'Run a scientist meeting where students compare data patterns, identify anomalies, and revise a class model.', vocabulary:'Create a concept map connecting technical terms, everyday meanings, symbols, and visual models.', evidence:'Give students two data sets and ask which better supports an explanation and why.' },
-      math: { reading:'Ask students to read a worked example and annotate givens, strategy, justification, and reasonableness.', writing:'Have students write a mathematical justification explaining why a solution method works.', discussion:'Use compare-and-connect: students analyze two solution paths for efficiency, accuracy, and reasoning.', vocabulary:'Use examples and non-examples for precise terms like function, factor, expression, or proof.', evidence:'Ask students to defend a solution using tables, graphs, equations, diagrams, and words.' },
-      social: { reading:'Use sourcing, contextualization, corroboration, and close reading with primary or secondary sources.', writing:'Have students write a historical argument using claim, evidence, and reasoning.', discussion:'Hold a structured academic controversy using evidence and perspective-taking.', vocabulary:'Track words whose meanings shift by time period, context, or perspective.', evidence:'Ask students to rank sources by usefulness and reliability for a historical or civic question.' },
-      ela: { reading:'Use layered annotation for craft, structure, theme, evidence, and author choices.', writing:'Have students imitate a mentor text move and explain how it affects audience or meaning.', discussion:'Use evidence-based seminar roles: connector, challenger, clarifier, evidence tracker, synthesizer.', vocabulary:'Study word choice, connotation, morphology, and shifts in meaning across texts.', evidence:'Ask students to select the strongest textual evidence and explain why it best supports an interpretation.' },
-      cte: { reading:'Have students read a technical manual, procedure, blueprint, recipe, safety sheet, or industry document for purpose, sequence, and constraints.', writing:'Ask students to write a professional explanation, procedure, client recommendation, or reflection using industry language.', discussion:'Use a workplace briefing: problem, constraints, options, risks, and recommended action.', vocabulary:'Build a job-site vocabulary wall with terms, tools, symbols, safety language, and applications.', evidence:'Students justify a design, repair, diagnosis, or recommendation using measurements, standards, or client needs.' },
-      arts: { reading:'Analyze an image, performance, score, design, or critique by identifying choices, techniques, context, and intended effect.', writing:'Have students write an artist statement explaining choices, process, revision, and audience impact.', discussion:'Use critique protocols where students describe, analyze, interpret, and suggest revisions.', vocabulary:'Connect technical vocabulary to examples, non-examples, student work, and professional models.', evidence:'Ask students to support an interpretation or critique with specific features from the work.' }
-    };
-
-    function generateIdea() { const content = document.getElementById('contentArea').value; const goal = document.getElementById('goalArea').value; document.getElementById('ideaOutput').innerHTML = '<strong>Try this:</strong> ' + ideaBank[content][goal]; }
-    const adminPrompts = { purpose:'Where did students see a clear reason to read, write, discuss, or view as part of learning the discipline?', student:'What evidence showed students were doing the thinking rather than only receiving information?', equity:'Which students had access points into the task, and who may need additional supports?', collaboration:'How did student talk help build understanding, and what routine could strengthen evidence-based discussion?', assessment:'What formative evidence did the teacher collect about content understanding and literacy strategy use?' };
-    function generateAdminPrompt() { const focus = document.getElementById('adminFocus').value; document.getElementById('adminOutput').innerHTML = '<strong>Coaching prompt:</strong> ' + adminPrompts[focus]; }
-    function scoreReadiness() { const count = Array.from(document.querySelectorAll('.readyCheck')).filter(c => c.checked).length; let msg = count <= 2 ? 'Emerging readiness: Start with shared language, a small leadership team, and one pilot practice.' : count <= 5 ? 'Developing readiness: Choose a common focus, collect evidence, and support PLC implementation.' : 'Strong readiness: Move toward calibration, coaching cycles, and sustainability planning.'; document.getElementById('readinessOutput').innerHTML = '<strong>' + count + '/8 items checked.</strong> ' + msg; }
-    const rolloutPlans = { classroom:'<strong>First 30 days:</strong> Pick one unit and one literacy focus.<br><strong>Days 31–60:</strong> Add discussion or writing routines.<br><strong>Days 61–90:</strong> Share examples with a PLC and transfer to another unit.', building:'<strong>First 30 days:</strong> Build shared language and select one school-wide focus.<br><strong>Days 31–60:</strong> Use PLCs to plan, observe, and collect student work.<br><strong>Days 61–90:</strong> Calibrate look-fors and identify professional learning needs.', district:'<strong>First 30 days:</strong> Align vision and curriculum expectations.<br><strong>Days 31–60:</strong> Identify pilot teams and common tools.<br><strong>Days 61–90:</strong> Review evidence and plan scaling.' };
-    function generateRollout() { document.getElementById('rolloutOutput').innerHTML = rolloutPlans[document.getElementById('rolloutLevel').value]; }
-    const plcAgendas = { unit:'<strong>PLC Agenda:</strong><ol><li>Name the unit question.</li><li>Identify texts/data/media.</li><li>Choose one discussion, writing, or evidence routine.</li><li>Plan supports.</li><li>Decide what student evidence to bring next time.</li></ol>', studentwork:'<strong>PLC Agenda:</strong><ol><li>Review task and literacy demand.</li><li>Sort student work.</li><li>Identify strengths and barriers.</li><li>Plan reteaching or extension.</li></ol>', walkthrough:'<strong>PLC Agenda:</strong><ol><li>Select look-fors.</li><li>Discuss visible student evidence.</li><li>Visit or review artifacts.</li><li>Debrief patterns.</li></ol>', intervention:'<strong>PLC Agenda:</strong><ol><li>Identify the literacy barrier.</li><li>Match supports.</li><li>Plan progress monitoring.</li><li>Connect support to core instruction.</li></ol>' };
-    function buildPLC() { document.getElementById('plcOutput').innerHTML = plcAgendas[document.getElementById('plcFocus').value]; }
-    function copyReflection() { const text = document.getElementById('reflectionBox').value; if (!text.trim()) { document.getElementById('copyOutput').innerText = 'Add a reflection first.'; return; } navigator.clipboard.writeText(text); document.getElementById('copyOutput').innerText = 'Reflection copied.'; }
-    function collectPlannerData() { return { subject:document.getElementById('plannerSubject').value, subjectLabel:document.getElementById('plannerSubject').selectedOptions[0].text, title:document.getElementById('plannerTitle').value, teacher:document.getElementById('plannerTeacher').value, course:document.getElementById('plannerCourse').value, time:document.getElementById('plannerTime').value, fields:Array.from(document.querySelectorAll('.plannerField')).map(f => ({ prompt:f.dataset.prompt, response:f.value })), feedback:document.getElementById('plannerFeedback').value, savedAt:new Date().toLocaleString() }; }
-    function savePlanner() { const data = collectPlannerData(); localStorage.setItem('disciplinaryLiteracyPlanner', JSON.stringify(data)); document.getElementById('plannerStatus').innerHTML = '<strong>Saved.</strong> ' + data.savedAt; }
-    function loadSavedPlanner() { const saved = localStorage.getItem('disciplinaryLiteracyPlanner'); if (!saved) { document.getElementById('plannerStatus').innerHTML = 'No saved plan found.'; return; } const data = JSON.parse(saved); document.getElementById('plannerSubject').value = data.subject; loadPlannerPrompts(); document.getElementById('plannerTitle').value = data.title || ''; document.getElementById('plannerTeacher').value = data.teacher || ''; document.getElementById('plannerCourse').value = data.course || ''; document.getElementById('plannerTime').value = data.time || ''; document.getElementById('plannerFeedback').value = data.feedback || ''; document.querySelectorAll('.plannerField').forEach((f,i) => f.value = data.fields?.[i]?.response || ''); document.getElementById('plannerStatus').innerHTML = '<strong>Loaded saved plan.</strong>'; }
-    function copyPlanner() { const data = collectPlannerData(); let output = `${data.subjectLabel} Disciplinary Literacy Plan
-Title: ${data.title}
-Teacher/Team: ${data.teacher}
-Grade/Course: ${data.course}
-Time Frame: ${data.time}
-
-`; data.fields.forEach((item, index) => output += `${index + 1}. ${item.prompt}
-${item.response}
-
-`); output += `Administrator / Coach Feedback or Next Steps
-${data.feedback}
-`; navigator.clipboard.writeText(output); document.getElementById('plannerStatus').innerHTML = '<strong>Copied.</strong> Paste into a lesson plan, email, or PLC notes.'; }
-    function clearPlanner() { document.getElementById('plannerTitle').value=''; document.getElementById('plannerTeacher').value=''; document.getElementById('plannerCourse').value=''; document.getElementById('plannerTime').value=''; document.getElementById('plannerFeedback').value=''; document.querySelectorAll('.plannerField').forEach(f => f.value=''); document.getElementById('plannerStatus').innerHTML='Planner cleared.'; }
-    function copyWalkthrough() { const notes = document.getElementById('walkthroughNotes').value; if (!notes.trim()) { document.getElementById('walkthroughStatus').innerText='Add notes first.'; return; } navigator.clipboard.writeText(notes); document.getElementById('walkthroughStatus').innerText='Walkthrough notes copied.'; }
-    const pdMenus = { intro:'<strong>Intro Session:</strong><ol><li>Define disciplinary literacy.</li><li>Compare across subjects.</li><li>Revise one lesson.</li></ol>', plc:'<strong>PLC Cycle:</strong><ol><li>Select one focus.</li><li>Plan a routine.</li><li>Teach and collect student work.</li><li>Analyze and adjust.</li></ol>', coach:'<strong>Coaching Cycle:</strong><ol><li>Set a goal.</li><li>Co-plan.</li><li>Observe student evidence.</li><li>Reflect and plan next steps.</li></ol>', district:'<strong>District Rollout:</strong><ol><li>Establish vision.</li><li>Identify pilot teams.</li><li>Create common tools.</li><li>Scale with evidence.</li></ol>' };
-    function showPD(type) { document.getElementById('pdOutput').innerHTML = pdMenus[type]; }
-    function applyFilters() { const active = document.querySelector('.filter.active').dataset.filter; const term = document.getElementById('search').value.toLowerCase().trim(); document.querySelectorAll('.practice').forEach(card => { const tags = card.dataset.tags.toLowerCase(); const text = card.innerText.toLowerCase(); card.style.display = (active === 'all' || tags.includes(active)) && (!term || text.includes(term) || tags.includes(term)) ? 'block' : 'none'; }); }
-    document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.filter').forEach(b => b.classList.remove('active')); btn.classList.add('active'); applyFilters(); }));
-    document.getElementById('search').addEventListener('input', applyFilters);
-    loadPlannerPrompts();
-  </script>
-</body>
-</html>
+          <div class="card"><h3>Core 6–12 Classroom Resource</h3><a href="https://gomaisa-cdn.fxbrt.com/downlo
