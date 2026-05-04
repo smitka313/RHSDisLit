@@ -379,32 +379,6 @@
       transition: transform .25s ease-out, box-shadow .25s ease-out, background .25s ease-out;
     }
 
-    .tool-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(0,0,0,.12);
-      background: #f8f8f8;
-    }
-
-    .tool-card:hover {
-      transform: transl.tool-card .icon-badge {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 2px;
-      /* Fill larger tool boxes */
-      font-size: 34px; /* ~60% of 56px */
-      line-height: 1;
-    }der-radius: 16px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 2px;
-      /* Fill larger tool boxes */
-      font-size: 34px; /* ~60% of 56px */
-      line-height: 1;
-    }
-
     .btn {
       border: 0;
       background: linear-gradient(135deg, var(--red), var(--red-dark));
@@ -945,7 +919,7 @@
       <section id="practices">
         <div class="section-header"><h2>10 Essential Classroom Practices</h2><p>Filter by role or search for a strategy.</p></div>
         <div class="section-body">
-          <div class="toolbar"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="teacher">Teacher</button><button class="filter" data-filter="coach">Coach/Admin</button><button class="filter" data-filter="student">Student Experience</button><input id="search" type="search" placeholder="Search strategies, e.g., evidence, vocabulary, discussion..." /></div>
+          <div class="toolbar"><button type="button" class="filter active" data-filter="all" onclick="setPracticeFilter('all', this)">All</button><button type="button" class="filter" data-filter="teacher" onclick="setPracticeFilter('teacher', this)">Teacher</button><button type="button" class="filter" data-filter="coach" onclick="setPracticeFilter('coach', this)">Coach/Admin</button><button type="button" class="filter" data-filter="student" onclick="setPracticeFilter('student', this)">Student Experience</button><input id="search" type="search" oninput="applyPracticeFilters()" placeholder="Search strategies, e.g., evidence, vocabulary, discussion..." /></div>
           <div class="practice-list" id="practiceList">
             <article class="practice" data-tags="teacher coach student inquiry problem question authentic"><h3>1. Problem- or Inquiry-Based Instruction</h3><p>Start with an authentic problem, phenomenon, issue, or question that creates a reason to read, write, investigate, and communicate.</p></article>
             <article class="practice" data-tags="teacher student collaboration discussion speaking listening discourse"><h3>2. Collaborative Reasoning and Discussion</h3><p>Use accountable discussion routines that require students to explain, challenge, clarify, and extend using evidence.</p></article>
@@ -1012,6 +986,26 @@
   <div id="pdOutput" class="callout">Select a professional learning format.</div>
 </div>
 </div>
+
+<div class="grid-2" style="margin-top:14px;">
+  <div class="card">
+    <h3>Walkthrough Evidence Capture</h3>
+    <textarea id="walkthroughNotes" rows="8" style="width:100%;" placeholder="Observed student task:
+Evidence of disciplinary reading/viewing:
+Evidence of discussion:
+Evidence of writing/reasoning:
+Access and equity supports:
+Possible next step:"></textarea>
+    <button style="margin-top:10px;" onclick="copyWalkthrough()">Copy Walkthrough Notes</button>
+    <span id="walkthroughStatus" style="margin-left:10px;color:var(--muted);"></span>
+  </div>
+  <div class="card">
+    <h3>Communication Toolkit</h3>
+    <details><summary>Staff Message</summary><p>Disciplinary literacy is not a separate program. It is how students use reading, writing, speaking, listening, viewing, and evidence-based reasoning to think deeply in every subject area.</p></details>
+    <details><summary>Family Message</summary><p>Students are learning how experts in each subject use information, evidence, and communication.</p></details>
+    <details><summary>Equity Check</summary><ul><li>Whose voices and experiences are represented?</li><li>What background knowledge is assumed?</li><li>How will students show understanding in more than one way?</li></ul></details>
+  </div>
+</div>
 </div>
 </section>
 
@@ -1063,142 +1057,257 @@ const taglineSubjects = [
   'engineer',
   'musician'
 ];
-
 let lastTaglineSubject = '';
-
 function rotateTagline() {
   const tagline = document.querySelector('.brand p[style*="color:#fff"]');
   if (!tagline) return;
-
-  const availableSubjects = taglineSubjects.filter(subject => subject !== lastTaglineSubject);
-  const subject = availableSubjects[Math.floor(Math.random() * availableSubjects.length)];
-
+  const available = taglineSubjects.filter(subject => subject !== lastTaglineSubject);
+  const subject = available[Math.floor(Math.random() * available.length)];
   lastTaglineSubject = subject;
   tagline.textContent = `Think like a ${subject}`;
 }
-
 rotateTagline();
 setInterval(rotateTagline, 8000);
 
-const backBtn = document.getElementById('backToTop');
-if (backBtn) {
-  window.addEventListener('scroll', () => {
-    backBtn.style.display = window.scrollY > 400 ? 'block' : 'none';
-  });
-}
-</script>
-<script>
+const ideaBank = {
+  science: {
+    reading: 'Have students annotate a graph, model, or short scientific article by marking claim, evidence, uncertainty, and connection to the unit phenomenon.',
+    writing: 'Use Claim-Evidence-Reasoning after a lab, simulation, or data analysis.',
+    discussion: 'Run a scientist meeting where students compare data patterns, identify anomalies, and revise a class model.',
+    vocabulary: 'Create a concept map connecting technical terms, everyday meanings, symbols, and visual models.',
+    evidence: 'Give students two data sets and ask which better supports an explanation and why.'
+  },
+  math: {
+    reading: 'Ask students to read a worked example and annotate givens, strategy, justification, and reasonableness.',
+    writing: 'Have students write a mathematical justification explaining why a solution method works.',
+    discussion: 'Use compare-and-connect: students analyze two solution paths for efficiency, accuracy, and reasoning.',
+    vocabulary: 'Use examples and non-examples for precise terms like function, factor, expression, or proof.',
+    evidence: 'Ask students to defend a solution using tables, graphs, equations, diagrams, and words.'
+  },
+  social: {
+    reading: 'Use sourcing, contextualization, corroboration, and close reading with primary or secondary sources.',
+    writing: 'Have students write a historical argument using claim, evidence, and reasoning.',
+    discussion: 'Hold a structured academic controversy using evidence and perspective-taking.',
+    vocabulary: 'Track words whose meanings shift by time period, context, or perspective.',
+    evidence: 'Ask students to rank sources by usefulness and reliability.'
+  },
+  ela: {
+    reading: 'Use layered annotation for craft, structure, theme, evidence, and author choices.',
+    writing: 'Have students imitate a mentor text move and explain its effect.',
+    discussion: 'Use evidence-based seminar roles: connector, challenger, clarifier, evidence tracker, synthesizer.',
+    vocabulary: 'Study word choice, connotation, morphology, and shifts in meaning across texts.',
+    evidence: 'Ask students to select the strongest textual evidence and explain why.'
+  },
+  cte: {
+    reading: 'Have students read a technical manual, procedure, blueprint, recipe, safety sheet, or industry document.',
+    writing: 'Ask students to write a professional explanation, procedure, recommendation, or reflection.',
+    discussion: 'Use a workplace briefing: problem, constraints, options, risks, and recommended action.',
+    vocabulary: 'Build a job-site vocabulary wall with terms, tools, symbols, and applications.',
+    evidence: 'Students justify a design, repair, diagnosis, or recommendation using standards or measurements.'
+  },
+  arts: {
+    reading: 'Analyze an image, performance, score, design, or critique by identifying choices and intended effect.',
+    writing: 'Have students write an artist statement explaining choices, process, revision, and audience impact.',
+    discussion: 'Use critique protocols where students describe, analyze, interpret, and suggest revisions.',
+    vocabulary: 'Connect technical vocabulary to examples, non-examples, student work, and professional models.',
+    evidence: 'Ask students to support an interpretation or critique with specific features from the work.'
+  }
+};
 function generateIdea() {
-  const ideas = {
-    science: {
-      reading: 'Have students annotate a graph, model, or short scientific article by marking claim, evidence, uncertainty, and connection to the unit phenomenon.',
-      writing: 'Use Claim-Evidence-Reasoning after a lab, simulation, or data analysis.',
-      discussion: 'Run a scientist meeting where students compare data patterns and revise a class model.',
-      vocabulary: 'Create a concept map connecting technical terms, everyday meanings, symbols, and visual models.',
-      evidence: 'Give students two data sets and ask which better supports an explanation and why.'
-    },
-    math: {
-      reading: 'Ask students to read a worked example and annotate givens, strategy, justification, and reasonableness.',
-      writing: 'Have students write a mathematical justification explaining why a solution method works.',
-      discussion: 'Compare two solution paths for efficiency, accuracy, and reasoning.',
-      vocabulary: 'Use examples and non-examples for precise terms like function, factor, expression, or proof.',
-      evidence: 'Ask students to defend a solution using tables, graphs, equations, diagrams, and words.'
-    },
-    social: {
-      reading: 'Use sourcing, contextualization, corroboration, and close reading with primary or secondary sources.',
-      writing: 'Have students write a historical argument using claim, evidence, and reasoning.',
-      discussion: 'Hold a structured academic controversy using evidence and perspective-taking.',
-      vocabulary: 'Track words whose meanings shift by time period, context, or perspective.',
-      evidence: 'Ask students to rank sources by usefulness and reliability.'
-    },
-    ela: {
-      reading: 'Use layered annotation for craft, structure, theme, evidence, and author choices.',
-      writing: 'Have students imitate a mentor text move and explain its effect.',
-      discussion: 'Use evidence-based seminar roles: connector, challenger, clarifier, evidence tracker, synthesizer.',
-      vocabulary: 'Study word choice, connotation, morphology, and shifts in meaning across texts.',
-      evidence: 'Ask students to select the strongest textual evidence and explain why.'
-    },
-    cte: {
-      reading: 'Have students read a technical manual, procedure, blueprint, recipe, safety sheet, or industry document.',
-      writing: 'Ask students to write a professional explanation, procedure, recommendation, or reflection.',
-      discussion: 'Use a workplace briefing: problem, constraints, options, risks, and recommended action.',
-      vocabulary: 'Build a job-site vocabulary wall with terms, tools, symbols, and applications.',
-      evidence: 'Students justify a design, repair, diagnosis, or recommendation using standards or measurements.'
-    },
-    arts: {
-      reading: 'Analyze an image, performance, score, design, or critique by identifying choices and intended effect.',
-      writing: 'Have students write an artist statement explaining choices, process, revision, and audience impact.',
-      discussion: 'Use critique protocols where students describe, analyze, interpret, and suggest revisions.',
-      vocabulary: 'Connect technical vocabulary to examples, non-examples, student work, and professional models.',
-      evidence: 'Ask students to support an interpretation or critique with specific features from the work.'
-    }
-  };
-
-  const content = document.getElementById('contentArea').value;
-  const goal = document.getElementById('goalArea').value;
-  document.getElementById('ideaOutput').innerHTML =
-    '<strong>Try this:</strong> ' + ideas[content][goal];
+  const content = document.getElementById('contentArea')?.value;
+  const goal = document.getElementById('goalArea')?.value;
+  const output = document.getElementById('ideaOutput');
+  if (content && goal && output) output.innerHTML = '<strong>Try this:</strong> ' + ideaBank[content][goal];
 }
 
+const adminPrompts = {
+  purpose: 'Where did students see a clear reason to read, write, discuss, or view as part of learning the discipline?',
+  student: 'What evidence showed students were doing the thinking rather than only receiving information?',
+  equity: 'Which students had access points into the task, and who may need additional supports?',
+  collaboration: 'How did student talk help build understanding, and what routine could strengthen evidence-based discussion?',
+  assessment: 'What formative evidence did the teacher collect about content understanding and literacy strategy use?'
+};
 function generateAdminPrompt() {
-  const prompts = {
-    purpose: 'Where did students see a clear reason to read, write, discuss, or view as part of learning the discipline?',
-    student: 'What evidence showed students were doing the thinking rather than only receiving information?',
-    equity: 'Which students had access points into the task, and who may need additional supports?',
-    collaboration: 'How did student talk help build understanding, and what routine could strengthen evidence-based discussion?',
-    assessment: 'What formative evidence did the teacher collect about content understanding and literacy strategy use?'
-  };
-
-  const focus = document.getElementById('adminFocus').value;
-  document.getElementById('adminOutput').innerHTML =
-    '<strong>Coaching prompt:</strong> ' + prompts[focus];
+  const focus = document.getElementById('adminFocus')?.value;
+  const output = document.getElementById('adminOutput');
+  if (focus && output) output.innerHTML = '<strong>Coaching prompt:</strong> ' + adminPrompts[focus];
 }
 
 function scoreReadiness() {
   const count = Array.from(document.querySelectorAll('.readyCheck')).filter(c => c.checked).length;
-
-  let message = '';
-  if (count <= 2) message = 'Emerging readiness: Start with shared language, a small leadership team, and one pilot practice.';
-  else if (count <= 5) message = 'Developing readiness: Choose a common focus, collect evidence, and support PLC implementation.';
-  else message = 'Strong readiness: Move toward calibration, coaching cycles, and sustainability planning.';
-
-  document.getElementById('readinessOutput').innerHTML =
-    '<strong>' + count + '/8 items checked.</strong> ' + message;
+  const output = document.getElementById('readinessOutput');
+  let message = count <= 2 ? 'Emerging readiness: Start with shared language, a small leadership team, and one pilot practice.' : count <= 5 ? 'Developing readiness: Choose a common focus, collect evidence, and support PLC implementation.' : 'Strong readiness: Move toward calibration, coaching cycles, and sustainability planning.';
+  if (output) output.innerHTML = '<strong>' + count + '/8 items checked.</strong> ' + message;
 }
 
+const rolloutPlans = {
+  classroom: '<strong>First 30 days:</strong> Pick one unit and one literacy focus.<br><strong>Days 31–60:</strong> Add discussion or writing routines.<br><strong>Days 61–90:</strong> Share examples with a PLC and transfer to another unit.',
+  building: '<strong>First 30 days:</strong> Build shared language and select one school-wide focus.<br><strong>Days 31–60:</strong> Use PLCs to plan, observe, and collect student work.<br><strong>Days 61–90:</strong> Calibrate look-fors and identify professional learning needs.',
+  district: '<strong>First 30 days:</strong> Align vision and curriculum expectations.<br><strong>Days 31–60:</strong> Identify pilot teams and common tools.<br><strong>Days 61–90:</strong> Review evidence and plan scaling.'
+};
 function generateRollout() {
-  const plans = {
-    classroom: '<strong>First 30 days:</strong> Pick one unit and one literacy focus.<br><strong>Days 31–60:</strong> Add discussion or writing routines.<br><strong>Days 61–90:</strong> Share examples with a PLC and transfer to another unit.',
-    building: '<strong>First 30 days:</strong> Build shared language and select one school-wide focus.<br><strong>Days 31–60:</strong> Use PLCs to plan, observe, and collect student work.<br><strong>Days 61–90:</strong> Calibrate look-fors and identify professional learning needs.',
-    district: '<strong>First 30 days:</strong> Align vision and curriculum expectations.<br><strong>Days 31–60:</strong> Identify pilot teams and common tools.<br><strong>Days 61–90:</strong> Review evidence and plan scaling.'
-  };
-
-  const level = document.getElementById('rolloutLevel').value;
-  document.getElementById('rolloutOutput').innerHTML = plans[level];
+  const level = document.getElementById('rolloutLevel')?.value;
+  const output = document.getElementById('rolloutOutput');
+  if (level && output) output.innerHTML = rolloutPlans[level];
 }
 
+const plcAgendas = {
+  unit: '<strong>PLC Agenda:</strong><ol><li>Name the unit question.</li><li>Identify texts/data/media.</li><li>Choose one discussion, writing, or evidence routine.</li><li>Plan supports.</li><li>Decide what student evidence to bring next time.</li></ol>',
+  studentwork: '<strong>PLC Agenda:</strong><ol><li>Review task and literacy demand.</li><li>Sort student work.</li><li>Identify strengths and barriers.</li><li>Plan reteaching or extension.</li></ol>',
+  walkthrough: '<strong>PLC Agenda:</strong><ol><li>Select look-fors.</li><li>Discuss visible student evidence.</li><li>Visit or review artifacts.</li><li>Debrief patterns.</li></ol>',
+  intervention: '<strong>PLC Agenda:</strong><ol><li>Identify the literacy barrier.</li><li>Match supports.</li><li>Plan progress monitoring.</li><li>Connect support to core instruction.</li></ol>'
+};
 function buildPLC() {
-  const agendas = {
-    unit: '<strong>PLC Agenda:</strong><ol><li>Name the unit question.</li><li>Identify texts/data/media.</li><li>Choose one discussion, writing, or evidence routine.</li><li>Plan supports.</li><li>Decide what student evidence to bring next time.</li></ol>',
-    studentwork: '<strong>PLC Agenda:</strong><ol><li>Review task and literacy demand.</li><li>Sort student work.</li><li>Identify strengths and barriers.</li><li>Plan reteaching or extension.</li></ol>',
-    walkthrough: '<strong>PLC Agenda:</strong><ol><li>Select look-fors.</li><li>Discuss visible student evidence.</li><li>Visit or review artifacts.</li><li>Debrief patterns.</li></ol>',
-    intervention: '<strong>PLC Agenda:</strong><ol><li>Identify the literacy barrier.</li><li>Match supports.</li><li>Plan progress monitoring.</li><li>Connect support to core instruction.</li></ol>'
-  };
-
-  const focus = document.getElementById('plcFocus').value;
-  document.getElementById('plcOutput').innerHTML = agendas[focus];
+  const focus = document.getElementById('plcFocus')?.value;
+  const output = document.getElementById('plcOutput');
+  if (focus && output) output.innerHTML = plcAgendas[focus];
 }
 
 function copyReflection() {
-  const text = document.getElementById('reflectionBox').value;
-  if (!text.trim()) {
-    document.getElementById('copyOutput').innerText = 'Add a reflection first.';
-    return;
-  }
-
+  const text = document.getElementById('reflectionBox')?.value || '';
+  const output = document.getElementById('copyOutput');
+  if (!text.trim()) { if (output) output.innerText = 'Add a reflection first.'; return; }
   navigator.clipboard.writeText(text);
-  document.getElementById('copyOutput').innerText = 'Reflection copied.';
+  if (output) output.innerText = 'Reflection copied.';
 }
+
+const plannerPrompts = {
+  science: ['Unit Phenomenon / Driving Question','Key Texts, Data, Graphs, Models, or Media','Disciplinary Literacy Strategy','How Students Will Read / View Like Scientists','How Students Will Discuss Evidence','How Students Will Write Scientific Reasoning','Vocabulary, Symbols, and Language Supports','Assessment Evidence and Student Work to Collect'],
+  math: ['Core Problem, Task, or Mathematical Question','Representations Students Will Use','Disciplinary Literacy Strategy','How Students Will Read Mathematical Text or Worked Examples','How Students Will Discuss Strategies and Reasoning','How Students Will Write Explanations or Justifications','Vocabulary, Symbols, and Precision Supports','Assessment Evidence and Student Work to Collect'],
+  social: ['Compelling Historical / Civic / Geographic Question','Primary and Secondary Sources','Disciplinary Literacy Strategy','How Students Will Analyze Perspective, Bias, or Reliability','How Students Will Discuss Competing Interpretations','How Students Will Write an Evidence-Based Argument','Vocabulary, Concepts, and Context Supports','Assessment Evidence and Student Work to Collect'],
+  ela: ['Text(s), Genre, or Essential Question','Reading Focus','Disciplinary Literacy Strategy','How Students Will Analyze Author Choices','How Students Will Discuss Interpretations','How Students Will Write for Audience and Purpose','Vocabulary, Language, and Text Structure Supports','Assessment Evidence and Student Work to Collect'],
+  cte: ['Real-World Workplace Task or Problem','Technical Texts, Tools, Manuals, Procedures, or Standards','Disciplinary Literacy Strategy','How Students Will Read or Use Industry Documents','How Students Will Discuss Options, Constraints, Risks, or Solutions','How Students Will Write a Report, Recommendation, Procedure, or Reflection','Industry Vocabulary, Tools, and Safety Language Supports','Assessment Evidence and Student Work to Collect'],
+  arts: ['Focus Work, Performance, Piece, Design, or Creative Problem','Texts / Media / Models Students Will Analyze','Disciplinary Literacy Strategy','How Students Will Analyze Like Artists','How Students Will Discuss Technique, Style, and Impact','How Students Will Write or Present an Artist Statement / Critique','Vocabulary, Technique, and Audience Supports','Assessment Evidence and Student Work to Collect']
+};
+function loadPlannerPrompts() {
+  const subject = document.getElementById('plannerSubject')?.value || 'science';
+  const holder = document.getElementById('plannerPromptFields');
+  if (!holder) return;
+  holder.innerHTML = '';
+  plannerPrompts[subject].forEach((prompt, index) => {
+    const block = document.createElement('div');
+    block.innerHTML = `<label><strong>${index + 1}. ${prompt}</strong></label><textarea class="plannerField" data-prompt="${prompt}" rows="4" style="width:100%; margin-top:6px;" placeholder="Type your plan here..."></textarea>`;
+    holder.appendChild(block);
+  });
+  const status = document.getElementById('plannerStatus');
+  if (status) status.innerHTML = 'Loaded prompts for <strong>' + document.getElementById('plannerSubject').selectedOptions[0].text + '</strong>.';
+}
+function collectPlannerData() {
+  return {
+    subject: document.getElementById('plannerSubject')?.value || 'science',
+    title: document.getElementById('plannerTitle')?.value || '',
+    teacher: document.getElementById('plannerTeacher')?.value || '',
+    course: document.getElementById('plannerCourse')?.value || '',
+    time: document.getElementById('plannerTime')?.value || '',
+    feedback: document.getElementById('plannerFeedback')?.value || '',
+    fields: Array.from(document.querySelectorAll('.plannerField')).map(f => ({prompt: f.dataset.prompt, response: f.value})),
+    savedAt: new Date().toLocaleString()
+  };
+}
+function savePlanner() {
+  const data = collectPlannerData();
+  localStorage.setItem('disciplinaryLiteracyPlanner', JSON.stringify(data));
+  document.getElementById('plannerStatus').innerHTML = '<strong>Saved.</strong> ' + data.savedAt;
+}
+function loadSavedPlanner() {
+  const saved = localStorage.getItem('disciplinaryLiteracyPlanner');
+  const status = document.getElementById('plannerStatus');
+  if (!saved) { if (status) status.innerHTML = 'No saved plan found.'; return; }
+  const data = JSON.parse(saved);
+  document.getElementById('plannerSubject').value = data.subject || 'science';
+  loadPlannerPrompts();
+  document.getElementById('plannerTitle').value = data.title || '';
+  document.getElementById('plannerTeacher').value = data.teacher || '';
+  document.getElementById('plannerCourse').value = data.course || '';
+  document.getElementById('plannerTime').value = data.time || '';
+  document.getElementById('plannerFeedback').value = data.feedback || '';
+  document.querySelectorAll('.plannerField').forEach((field, i) => field.value = data.fields?.[i]?.response || '');
+  if (status) status.innerHTML = '<strong>Loaded saved plan.</strong>';
+}
+function copyPlanner() {
+  const data = collectPlannerData();
+  let output = `Disciplinary Literacy Plan
+Title: ${data.title}
+Teacher/Team: ${data.teacher}
+Grade/Course: ${data.course}
+Time Frame: ${data.time}
+
+`;
+  data.fields.forEach((item, index) => output += `${index + 1}. ${item.prompt}
+${item.response}
+
+`);
+  output += `Administrator / Coach Feedback or Next Steps
+${data.feedback}
+`;
+  navigator.clipboard.writeText(output);
+  document.getElementById('plannerStatus').innerHTML = '<strong>Copied.</strong> Paste into a lesson plan, email, or PLC notes.';
+}
+function clearPlanner() {
+  ['plannerTitle','plannerTeacher','plannerCourse','plannerTime','plannerFeedback'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.querySelectorAll('.plannerField').forEach(f => f.value = '');
+  document.getElementById('plannerStatus').innerHTML = 'Planner cleared.';
+}
+
+function copyWalkthrough() {
+  const notes = document.getElementById('walkthroughNotes')?.value || '';
+  const status = document.getElementById('walkthroughStatus');
+  if (!notes.trim()) { if (status) status.innerText = 'Add notes first.'; return; }
+  navigator.clipboard.writeText(notes);
+  if (status) status.innerText = 'Walkthrough notes copied.';
+}
+
+const pdMenus = {
+  intro: '<strong>Intro Session:</strong><ol><li>Define disciplinary literacy.</li><li>Compare what literacy looks like across subjects.</li><li>Review one classroom practice and one school-wide practice.</li><li>Have teachers identify one upcoming lesson to revise.</li></ol>',
+  plc: '<strong>PLC Cycle:</strong><ol><li>Select one shared literacy focus.</li><li>Plan a common routine or task.</li><li>Teach and collect student work.</li><li>Analyze evidence and adjust instruction.</li></ol>',
+  coach: '<strong>Coaching Cycle:</strong><ol><li>Set a teacher-selected goal.</li><li>Co-plan a disciplinary literacy routine.</li><li>Observe for student evidence.</li><li>Reflect and plan next steps.</li></ol>',
+  district: '<strong>District Rollout:</strong><ol><li>Establish shared vision and language.</li><li>Identify pilot teams or buildings.</li><li>Create common tools and look-fors.</li><li>Use evidence to scale supports over time.</li></ol>'
+};
+function showPD(type) {
+  const output = document.getElementById('pdOutput');
+  if (output) output.innerHTML = pdMenus[type];
+}
+
+function applyFilters() {
+  const active = document.querySelector('.filter.active')?.dataset.filter || 'all';
+  const term = document.getElementById('search')?.value.toLowerCase().trim() || '';
+  document.querySelectorAll('.practice').forEach(card => {
+    const tags = card.dataset.tags.toLowerCase();
+    const text = card.innerText.toLowerCase();
+    card.style.display = (active === 'all' || tags.includes(active)) && (!term || text.includes(term) || tags.includes(term)) ? 'block' : 'none';
+  });
+}
+document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}));
+const searchInput = document.getElementById('search');
+if (searchInput) searchInput.addEventListener('input', applyFilters);
+const backBtn = document.getElementById('backToTop');
+if (backBtn) window.addEventListener('scroll', () => { backBtn.style.display = window.scrollY > 400 ? 'block' : 'none'; });
+
+function setPracticeFilter(filter, button) {
+  document.querySelectorAll('#practices .filter').forEach(btn => btn.classList.remove('active'));
+  if (button) button.classList.add('active');
+  applyPracticeFilters(filter);
+}
+
+function applyPracticeFilters(forcedFilter) {
+  const activeFilter = forcedFilter || document.querySelector('#practices .filter.active')?.dataset.filter || 'all';
+  const searchTerm = document.getElementById('search')?.value.toLowerCase().trim() || '';
+
+  document.querySelectorAll('#practiceList .practice').forEach(card => {
+    const tags = (card.dataset.tags || '').toLowerCase();
+    const text = card.innerText.toLowerCase();
+    const roleMatch = activeFilter === 'all' || tags.includes(activeFilter);
+    const searchMatch = !searchTerm || text.includes(searchTerm) || tags.includes(searchTerm);
+    card.style.display = roleMatch && searchMatch ? 'block' : 'none';
+  });
+}
+
+try { loadPlannerPrompts(); } catch (error) { console.warn('Planner initialization skipped:', error); }
+try { applyPracticeFilters(); } catch (error) { console.warn('Practice filters skipped:', error); }
 </script>
 </body>
 </html>
