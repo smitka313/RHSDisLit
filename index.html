@@ -851,11 +851,20 @@
             <div class="card">
               <h3>Classroom Strategy Idea Generator</h3>
               <div class="toolbar">
-                <select id="contentArea"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE / Career Tech</option><option value="arts">Arts / Electives</option></select>
+                <select id="contentArea"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE / Career Tech</option><option value="arts">Arts / Electives</option><option value="pe">Physical Education (P.E.)</option></select>
                 <select id="goalArea"><option value="reading">Reading / Viewing</option><option value="writing">Writing</option><option value="discussion">Discussion</option><option value="vocabulary">Vocabulary / Language</option><option value="evidence">Evidence and Reasoning</option></select>
                 <button onclick="generateIdea()">Generate Idea</button>
               </div>
               <div id="ideaOutput" class="callout">Choose a content area and goal, then generate an idea.</div>
+              <details style="margin-top:12px;">
+                <summary>P.E. sample lesson outputs</summary>
+                <div style="margin-top:10px;">
+                  <p><strong>Game Strategy Analysis:</strong> After a small-sided game, students identify one successful strategy, cite evidence from gameplay, and recommend one adjustment for the next round.</p>
+                  <p><strong>Fitness Reflection:</strong> Students track effort, heart-rate zone, repetitions, or perceived exertion, then write a short reflection explaining progress and a next-step goal.</p>
+                  <p><strong>Skill Feedback Protocol:</strong> Partners observe a skill using 2–3 movement cues, give evidence-based feedback, and record one specific improvement target.</p>
+                  <p><strong>Performance Evidence Claim:</strong> Students make a claim such as “My passing accuracy improved” and support it with data, peer observation, or video evidence.</p>
+                </div>
+              </details>
             </div>
             <div class="card">
               <h3>Administrator Coaching Prompt Generator</h3>
@@ -906,7 +915,7 @@
         <div class="section-header"><h2>Fillable Digital Planning Template</h2><p>Choose a subject area to load subject-specific prompts. Save your work in this browser or copy it for lesson plans, PLC notes, or coaching.</p></div>
         <div class="section-body">
           <div class="card">
-            <div class="toolbar"><select id="plannerSubject" onchange="loadPlannerPrompts()"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE</option><option value="arts">Arts & Electives</option></select><input id="plannerTitle" type="text" placeholder="Unit / Lesson Title" /><input id="plannerTeacher" type="text" placeholder="Teacher / Team" /><button onclick="savePlanner()">Save</button><button onclick="loadSavedPlanner()">Load</button><button onclick="copyPlanner()">Copy Plan</button><button onclick="clearPlanner()">Clear</button></div>
+            <div class="toolbar"><select id="plannerSubject" onchange="loadPlannerPrompts()"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE</option><option value="arts">Arts & Electives</option><option value="pe">Physical Education (P.E.)</option></select><input id="plannerTitle" type="text" placeholder="Unit / Lesson Title" /><input id="plannerTeacher" type="text" placeholder="Teacher / Team" /><button onclick="savePlanner()">Save</button><button onclick="loadSavedPlanner()">Load</button><button onclick="copyPlanner()">Copy Plan</button><button onclick="clearPlanner()">Clear</button></div>
             <div class="grid-2"><div><label><strong>Grade / Course</strong></label><input id="plannerCourse" type="text" style="width:100%; margin-top:6px;" placeholder="Example: Biology, Algebra 1, US History" /></div><div><label><strong>Time Frame</strong></label><input id="plannerTime" type="text" style="width:100%; margin-top:6px;" placeholder="Example: 3 class periods, 2-week unit" /></div></div>
             <div id="plannerPromptFields" class="grid-2" style="margin-top:16px;"></div>
             <label><strong>Administrator / Coach Feedback or Next Steps</strong></label>
@@ -1111,6 +1120,13 @@ const ideaBank = {
     discussion: 'Use critique protocols where students describe, analyze, interpret, and suggest revisions.',
     vocabulary: 'Connect technical vocabulary to examples, non-examples, student work, and professional models.',
     evidence: 'Ask students to support an interpretation or critique with specific features from the work.'
+  },
+  pe: {
+    reading: 'Have students watch a short skill demonstration or game clip and identify cues, positioning, movement patterns, and decision-making.',
+    writing: 'Use a fitness or performance reflection: students describe what they tried, what evidence shows progress, and what adjustment they will make next.',
+    discussion: 'Run a team strategy huddle where students use evidence from gameplay to revise positioning, communication, or tactics.',
+    vocabulary: 'Build movement-language routines using terms such as balance, force, accuracy, endurance, recovery, spacing, defense, and transition.',
+    evidence: 'Ask students to use performance data, peer feedback, heart-rate zones, repetitions, accuracy counts, or video evidence to support a claim about improvement.'
   }
 };
 function generateIdea() {
@@ -1177,7 +1193,8 @@ const plannerPrompts = {
   social: ['Compelling Historical / Civic / Geographic Question','Primary and Secondary Sources','Disciplinary Literacy Strategy','How Students Will Analyze Perspective, Bias, or Reliability','How Students Will Discuss Competing Interpretations','How Students Will Write an Evidence-Based Argument','Vocabulary, Concepts, and Context Supports','Assessment Evidence and Student Work to Collect'],
   ela: ['Text(s), Genre, or Essential Question','Reading Focus','Disciplinary Literacy Strategy','How Students Will Analyze Author Choices','How Students Will Discuss Interpretations','How Students Will Write for Audience and Purpose','Vocabulary, Language, and Text Structure Supports','Assessment Evidence and Student Work to Collect'],
   cte: ['Real-World Workplace Task or Problem','Technical Texts, Tools, Manuals, Procedures, or Standards','Disciplinary Literacy Strategy','How Students Will Read or Use Industry Documents','How Students Will Discuss Options, Constraints, Risks, or Solutions','How Students Will Write a Report, Recommendation, Procedure, or Reflection','Industry Vocabulary, Tools, and Safety Language Supports','Assessment Evidence and Student Work to Collect'],
-  arts: ['Focus Work, Performance, Piece, Design, or Creative Problem','Texts / Media / Models Students Will Analyze','Disciplinary Literacy Strategy','How Students Will Analyze Like Artists','How Students Will Discuss Technique, Style, and Impact','How Students Will Write or Present an Artist Statement / Critique','Vocabulary, Technique, and Audience Supports','Assessment Evidence and Student Work to Collect']
+  arts: ['Focus Work, Performance, Piece, Design, or Creative Problem','Texts / Media / Models Students Will Analyze','Disciplinary Literacy Strategy','How Students Will Analyze Like Artists','How Students Will Discuss Technique, Style, and Impact','How Students Will Write or Present an Artist Statement / Critique','Vocabulary, Technique, and Audience Supports','Assessment Evidence and Student Work to Collect'],
+      pe: ['Skill or Activity Focus (e.g., game, fitness, technique)','Demonstration, Modeling, or Visuals Used','Disciplinary Literacy Strategy (analysis, reflection, strategy, communication)','How Students Will Observe and Analyze Performance','How Students Will Communicate Strategy or Feedback','How Students Will Reflect on Performance or Growth','Vocabulary (movement, strategy, fitness terms)','Assessment Evidence and Student Performance Data']
 };
 function loadPlannerPrompts() {
   const subject = document.getElementById('plannerSubject')?.value || 'science';
