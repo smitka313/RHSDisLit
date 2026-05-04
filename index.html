@@ -1087,5 +1087,118 @@ if (backBtn) {
   });
 }
 </script>
+<script>
+function generateIdea() {
+  const ideas = {
+    science: {
+      reading: 'Have students annotate a graph, model, or short scientific article by marking claim, evidence, uncertainty, and connection to the unit phenomenon.',
+      writing: 'Use Claim-Evidence-Reasoning after a lab, simulation, or data analysis.',
+      discussion: 'Run a scientist meeting where students compare data patterns and revise a class model.',
+      vocabulary: 'Create a concept map connecting technical terms, everyday meanings, symbols, and visual models.',
+      evidence: 'Give students two data sets and ask which better supports an explanation and why.'
+    },
+    math: {
+      reading: 'Ask students to read a worked example and annotate givens, strategy, justification, and reasonableness.',
+      writing: 'Have students write a mathematical justification explaining why a solution method works.',
+      discussion: 'Compare two solution paths for efficiency, accuracy, and reasoning.',
+      vocabulary: 'Use examples and non-examples for precise terms like function, factor, expression, or proof.',
+      evidence: 'Ask students to defend a solution using tables, graphs, equations, diagrams, and words.'
+    },
+    social: {
+      reading: 'Use sourcing, contextualization, corroboration, and close reading with primary or secondary sources.',
+      writing: 'Have students write a historical argument using claim, evidence, and reasoning.',
+      discussion: 'Hold a structured academic controversy using evidence and perspective-taking.',
+      vocabulary: 'Track words whose meanings shift by time period, context, or perspective.',
+      evidence: 'Ask students to rank sources by usefulness and reliability.'
+    },
+    ela: {
+      reading: 'Use layered annotation for craft, structure, theme, evidence, and author choices.',
+      writing: 'Have students imitate a mentor text move and explain its effect.',
+      discussion: 'Use evidence-based seminar roles: connector, challenger, clarifier, evidence tracker, synthesizer.',
+      vocabulary: 'Study word choice, connotation, morphology, and shifts in meaning across texts.',
+      evidence: 'Ask students to select the strongest textual evidence and explain why.'
+    },
+    cte: {
+      reading: 'Have students read a technical manual, procedure, blueprint, recipe, safety sheet, or industry document.',
+      writing: 'Ask students to write a professional explanation, procedure, recommendation, or reflection.',
+      discussion: 'Use a workplace briefing: problem, constraints, options, risks, and recommended action.',
+      vocabulary: 'Build a job-site vocabulary wall with terms, tools, symbols, and applications.',
+      evidence: 'Students justify a design, repair, diagnosis, or recommendation using standards or measurements.'
+    },
+    arts: {
+      reading: 'Analyze an image, performance, score, design, or critique by identifying choices and intended effect.',
+      writing: 'Have students write an artist statement explaining choices, process, revision, and audience impact.',
+      discussion: 'Use critique protocols where students describe, analyze, interpret, and suggest revisions.',
+      vocabulary: 'Connect technical vocabulary to examples, non-examples, student work, and professional models.',
+      evidence: 'Ask students to support an interpretation or critique with specific features from the work.'
+    }
+  };
+
+  const content = document.getElementById('contentArea').value;
+  const goal = document.getElementById('goalArea').value;
+  document.getElementById('ideaOutput').innerHTML =
+    '<strong>Try this:</strong> ' + ideas[content][goal];
+}
+
+function generateAdminPrompt() {
+  const prompts = {
+    purpose: 'Where did students see a clear reason to read, write, discuss, or view as part of learning the discipline?',
+    student: 'What evidence showed students were doing the thinking rather than only receiving information?',
+    equity: 'Which students had access points into the task, and who may need additional supports?',
+    collaboration: 'How did student talk help build understanding, and what routine could strengthen evidence-based discussion?',
+    assessment: 'What formative evidence did the teacher collect about content understanding and literacy strategy use?'
+  };
+
+  const focus = document.getElementById('adminFocus').value;
+  document.getElementById('adminOutput').innerHTML =
+    '<strong>Coaching prompt:</strong> ' + prompts[focus];
+}
+
+function scoreReadiness() {
+  const count = Array.from(document.querySelectorAll('.readyCheck')).filter(c => c.checked).length;
+
+  let message = '';
+  if (count <= 2) message = 'Emerging readiness: Start with shared language, a small leadership team, and one pilot practice.';
+  else if (count <= 5) message = 'Developing readiness: Choose a common focus, collect evidence, and support PLC implementation.';
+  else message = 'Strong readiness: Move toward calibration, coaching cycles, and sustainability planning.';
+
+  document.getElementById('readinessOutput').innerHTML =
+    '<strong>' + count + '/8 items checked.</strong> ' + message;
+}
+
+function generateRollout() {
+  const plans = {
+    classroom: '<strong>First 30 days:</strong> Pick one unit and one literacy focus.<br><strong>Days 31–60:</strong> Add discussion or writing routines.<br><strong>Days 61–90:</strong> Share examples with a PLC and transfer to another unit.',
+    building: '<strong>First 30 days:</strong> Build shared language and select one school-wide focus.<br><strong>Days 31–60:</strong> Use PLCs to plan, observe, and collect student work.<br><strong>Days 61–90:</strong> Calibrate look-fors and identify professional learning needs.',
+    district: '<strong>First 30 days:</strong> Align vision and curriculum expectations.<br><strong>Days 31–60:</strong> Identify pilot teams and common tools.<br><strong>Days 61–90:</strong> Review evidence and plan scaling.'
+  };
+
+  const level = document.getElementById('rolloutLevel').value;
+  document.getElementById('rolloutOutput').innerHTML = plans[level];
+}
+
+function buildPLC() {
+  const agendas = {
+    unit: '<strong>PLC Agenda:</strong><ol><li>Name the unit question.</li><li>Identify texts/data/media.</li><li>Choose one discussion, writing, or evidence routine.</li><li>Plan supports.</li><li>Decide what student evidence to bring next time.</li></ol>',
+    studentwork: '<strong>PLC Agenda:</strong><ol><li>Review task and literacy demand.</li><li>Sort student work.</li><li>Identify strengths and barriers.</li><li>Plan reteaching or extension.</li></ol>',
+    walkthrough: '<strong>PLC Agenda:</strong><ol><li>Select look-fors.</li><li>Discuss visible student evidence.</li><li>Visit or review artifacts.</li><li>Debrief patterns.</li></ol>',
+    intervention: '<strong>PLC Agenda:</strong><ol><li>Identify the literacy barrier.</li><li>Match supports.</li><li>Plan progress monitoring.</li><li>Connect support to core instruction.</li></ol>'
+  };
+
+  const focus = document.getElementById('plcFocus').value;
+  document.getElementById('plcOutput').innerHTML = agendas[focus];
+}
+
+function copyReflection() {
+  const text = document.getElementById('reflectionBox').value;
+  if (!text.trim()) {
+    document.getElementById('copyOutput').innerText = 'Add a reflection first.';
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+  document.getElementById('copyOutput').innerText = 'Reflection copied.';
+}
+</script>
 </body>
 </html>
