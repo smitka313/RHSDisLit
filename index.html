@@ -851,7 +851,7 @@
             <div class="card">
               <h3>Classroom Strategy Idea Generator</h3>
               <div class="toolbar">
-                <select id="contentArea"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE / Career Tech</option><option value="arts">Arts / Electives</option><option value="pe">Physical Education (P.E.)</option></select>
+                <select id="contentArea"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE / Career Tech</option><option value="arts">Arts / Electives</option><option value="pe">Physical Education (P.E.)</option><option value="world">World Languages</option><option value="business">Business / Marketing</option></select>
                 <select id="goalArea"><option value="reading">Reading / Viewing</option><option value="writing">Writing</option><option value="discussion">Discussion</option><option value="vocabulary">Vocabulary / Language</option><option value="evidence">Evidence and Reasoning</option></select>
                 <button onclick="generateIdea()">Generate Idea</button>
               </div>
@@ -863,6 +863,26 @@
                   <p><strong>Fitness Reflection:</strong> Students track effort, heart-rate zone, repetitions, or perceived exertion, then write a short reflection explaining progress and a next-step goal.</p>
                   <p><strong>Skill Feedback Protocol:</strong> Partners observe a skill using 2–3 movement cues, give evidence-based feedback, and record one specific improvement target.</p>
                   <p><strong>Performance Evidence Claim:</strong> Students make a claim such as “My passing accuracy improved” and support it with data, peer observation, or video evidence.</p>
+                </div>
+              </details>
+
+              <details style="margin-top:12px;">
+                <summary>World Languages sample lesson outputs</summary>
+                <div style="margin-top:10px;">
+                  <p><strong>Interpretive Task:</strong> Students listen to a short conversation and identify the main idea and two supporting details using target language phrases.</p>
+                  <p><strong>Interpersonal Communication:</strong> Students role-play a real-world scenario (ordering food, asking directions) and respond using appropriate vocabulary and sentence structures.</p>
+                  <p><strong>Presentational Writing:</strong> Students write a short message (email/text) to a specific audience using target grammar and vocabulary.</p>
+                  <p><strong>Cultural Comparison:</strong> Students compare a cultural practice to their own and explain similarities/differences using evidence.</p>
+                </div>
+              </details>
+
+              <details style="margin-top:12px;">
+                <summary>Business / Marketing sample lesson outputs</summary>
+                <div style="margin-top:10px;">
+                  <p><strong>Market Analysis:</strong> Students analyze a simple data set or chart and identify trends to determine a target audience.</p>
+                  <p><strong>Advertising Critique:</strong> Students evaluate an advertisement, identify persuasive techniques, and explain effectiveness using evidence.</p>
+                  <p><strong>Business Pitch:</strong> Students create a short pitch recommending a product or strategy supported by data and reasoning.</p>
+                  <p><strong>Decision Justification:</strong> Students choose between two business options and justify their decision using cost, audience, and outcome data.</p>
                 </div>
               </details>
             </div>
@@ -915,7 +935,7 @@
         <div class="section-header"><h2>Fillable Digital Planning Template</h2><p>Choose a subject area to load subject-specific prompts. Save your work in this browser or copy it for lesson plans, PLC notes, or coaching.</p></div>
         <div class="section-body">
           <div class="card">
-            <div class="toolbar"><select id="plannerSubject" onchange="loadPlannerPrompts()"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE</option><option value="arts">Arts & Electives</option><option value="pe">Physical Education (P.E.)</option></select><input id="plannerTitle" type="text" placeholder="Unit / Lesson Title" /><input id="plannerTeacher" type="text" placeholder="Teacher / Team" /><button onclick="savePlanner()">Save</button><button onclick="loadSavedPlanner()">Load</button><button onclick="copyPlanner()">Copy Plan</button><button onclick="clearPlanner()">Clear</button></div>
+            <div class="toolbar"><select id="plannerSubject" onchange="loadPlannerPrompts()"><option value="science">Science</option><option value="math">Mathematics</option><option value="social">Social Studies</option><option value="ela">ELA</option><option value="cte">CTE</option><option value="arts">Arts & Electives</option><option value="pe">Physical Education (P.E.)</option><option value="world">World Languages</option><option value="business">Business / Marketing</option></select><input id="plannerTitle" type="text" placeholder="Unit / Lesson Title" /><input id="plannerTeacher" type="text" placeholder="Teacher / Team" /><button onclick="savePlanner()">Save</button><button onclick="loadSavedPlanner()">Load</button><button onclick="copyPlanner()">Copy Plan</button><button onclick="clearPlanner()">Clear</button></div>
             <div class="grid-2"><div><label><strong>Grade / Course</strong></label><input id="plannerCourse" type="text" style="width:100%; margin-top:6px;" placeholder="Example: Biology, Algebra 1, US History" /></div><div><label><strong>Time Frame</strong></label><input id="plannerTime" type="text" style="width:100%; margin-top:6px;" placeholder="Example: 3 class periods, 2-week unit" /></div></div>
             <div id="plannerPromptFields" class="grid-2" style="margin-top:16px;"></div>
             <label><strong>Administrator / Coach Feedback or Next Steps</strong></label>
@@ -1123,6 +1143,27 @@ const ideaBank = {
   },
   pe: {
     reading: 'Have students watch a short skill demonstration or game clip and identify cues, positioning, movement patterns, and decision-making.',
+    writing: 'Use a fitness or performance reflection describing progress and next steps.',
+    discussion: 'Run a team strategy huddle using evidence from gameplay to adjust tactics.',
+    vocabulary: 'Use movement and strategy terms (balance, force, spacing, transition).',
+    evidence: 'Use performance data or video to support claims about improvement.'
+  },
+  world: {
+    reading: 'Interpret short authentic audio/text and identify gist, key details, and context clues.',
+    writing: 'Write a short message or paragraph for a real audience using target structures.',
+    discussion: 'Role-play a scenario (ordering, travel, interview) using evidence from prompts.',
+    vocabulary: 'Learn words in context with visuals and sentence frames.',
+    evidence: 'Support meaning with cited phrases or spoken evidence from the text/audio.'
+  },
+  business: {
+    reading: 'Analyze a short market report or advertisement for claims, data, and target audience.',
+    writing: 'Draft a brief recommendation or pitch using evidence and clear reasoning.',
+    discussion: 'Debate two strategies using data (cost, reach, ROI).',
+    vocabulary: 'Use terms like margin, revenue, target market, conversion in context.',
+    evidence: 'Use charts or case data to justify a business decision.'
+  },
+  pe: {
+    reading: 'Have students watch a short skill demonstration or game clip and identify cues, positioning, movement patterns, and decision-making.',
     writing: 'Use a fitness or performance reflection: students describe what they tried, what evidence shows progress, and what adjustment they will make next.',
     discussion: 'Run a team strategy huddle where students use evidence from gameplay to revise positioning, communication, or tactics.',
     vocabulary: 'Build movement-language routines using terms such as balance, force, accuracy, endurance, recovery, spacing, defense, and transition.',
@@ -1194,7 +1235,9 @@ const plannerPrompts = {
   ela: ['Text(s), Genre, or Essential Question','Reading Focus','Disciplinary Literacy Strategy','How Students Will Analyze Author Choices','How Students Will Discuss Interpretations','How Students Will Write for Audience and Purpose','Vocabulary, Language, and Text Structure Supports','Assessment Evidence and Student Work to Collect'],
   cte: ['Real-World Workplace Task or Problem','Technical Texts, Tools, Manuals, Procedures, or Standards','Disciplinary Literacy Strategy','How Students Will Read or Use Industry Documents','How Students Will Discuss Options, Constraints, Risks, or Solutions','How Students Will Write a Report, Recommendation, Procedure, or Reflection','Industry Vocabulary, Tools, and Safety Language Supports','Assessment Evidence and Student Work to Collect'],
   arts: ['Focus Work, Performance, Piece, Design, or Creative Problem','Texts / Media / Models Students Will Analyze','Disciplinary Literacy Strategy','How Students Will Analyze Like Artists','How Students Will Discuss Technique, Style, and Impact','How Students Will Write or Present an Artist Statement / Critique','Vocabulary, Technique, and Audience Supports','Assessment Evidence and Student Work to Collect'],
-      pe: ['Skill or Activity Focus (e.g., game, fitness, technique)','Demonstration, Modeling, or Visuals Used','Disciplinary Literacy Strategy (analysis, reflection, strategy, communication)','How Students Will Observe and Analyze Performance','How Students Will Communicate Strategy or Feedback','How Students Will Reflect on Performance or Growth','Vocabulary (movement, strategy, fitness terms)','Assessment Evidence and Student Performance Data']
+      pe: ['Skill or Activity Focus (e.g., game, fitness, technique)','Demonstration, Modeling, or Visuals Used','Disciplinary Literacy Strategy (analysis, reflection, strategy, communication)','How Students Will Observe and Analyze Performance','How Students Will Communicate Strategy or Feedback','How Students Will Reflect on Performance or Growth','Vocabulary (movement, strategy, fitness terms)','Assessment Evidence and Student Performance Data'],
+      world: ['Target Language Theme or Scenario','Authentic Texts/Media (audio, dialogue, article)','Disciplinary Literacy Strategy (interpretation, communication, comparison)','How Students Will Interpret Meaning (listening/reading)','How Students Will Communicate (speaking/writing) with purpose','Cultural Comparison/Connection','Vocabulary/Structures in Context','Assessment Evidence (performance, conversation, comprehension)'],
+      business: ['Business Problem or Case (market, finance, operations)','Data/Texts (charts, reports, ads, articles)','Disciplinary Literacy Strategy (analysis, persuasion, decision-making)','How Students Will Analyze Data/Trends','How Students Will Communicate a Recommendation','Audience & Purpose (client, investor, customer)','Key Vocabulary (ROI, margin, target market, etc.)','Assessment Evidence (pitch, memo, analysis)']
 };
 function loadPlannerPrompts() {
   const subject = document.getElementById('plannerSubject')?.value || 'science';
